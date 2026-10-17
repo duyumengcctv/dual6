@@ -1,0 +1,14 @@
+[package]
+name = "dual6-py"
+version = "0.3.0"
+edition = "2021"
+license = "MIT"
+description = "PyO3 bindings for the Dual6 storage container core."
+
+[lib]
+name = "_native"
+crate-type = ["cdylib"]
+
+[dependencies]
+dual6-core = { path = "../dual6-core" }
+pyo3 = { version = "0.23", features = ["extension-module"] }

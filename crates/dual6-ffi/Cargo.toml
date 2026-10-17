@@ -1,0 +1,12 @@
+[package]
+name = "dual6-ffi"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "C ABI for the Dual6 storage container core."
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+dual6-core = { path = "../dual6-core" }

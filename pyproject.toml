@@ -1,0 +1,65 @@
+# Dual6 ships two build paths from this single file:
+#
+#   1. Default / portable  : setuptools pure-Python wheel (no Rust needed).
+#      ``pip install .`` and ``python -m build`` use ``setuptools.build_meta``.
+#   2. Optional native     : PyO3 extension built with maturin or
+#      ``tools/build_native.py`` (see docs/09-release.md).
+#      ``[tool.maturin]`` below configures that path.
+#
+# The package always loads the pure-Python ``_ref`` implementation first and
+# layers ``_native`` on top when it is importable.
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dual6"
+version = "0.3.0"
+description = "Dual6: a 2x3 (bit, trit) storage container. Storage only, no arithmetic."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "二生三 / Dual6" }]
+keywords = ["storage", "container", "bit", "trit", "serialization", "base6"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Rust",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Hardware",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://example.invalid/dual6"
+Documentation = "https://example.invalid/dual6/docs"
+
+[project.optional-dependencies]
+dev = ["coverage", "build", "tomli; python_version < '3.11'"]
+
+[project.scripts]
+dual6 = "dual6.cli:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["python"]
+include = ["dual6*"]
+
+[tool.setuptools.package-data]
+dual6 = ["py.typed", "_native.pyi"]
+"dual6._ref" = ["py.typed"]
+
+[tool.maturin]
+manifest-path = "crates/dual6-py/Cargo.toml"
+python-source = "python"
+module-name = "dual6._native"

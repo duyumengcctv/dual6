@@ -1,0 +1,17 @@
+[workspace]
+members = [
+    "crates/dual6-core",
+    "crates/dual6-ffi",
+    "crates/dual6-py",
+]
+default-members = [
+    "crates/dual6-core",
+    "crates/dual6-ffi",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.3.0"
+edition = "2021"
+license = "MIT"
+repository = "https://example.invalid/dual6"

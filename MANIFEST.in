@@ -1,0 +1,22 @@
+# Source distribution contents.
+include README.md
+include Cargo.toml
+include Cargo.lock
+include pyproject.toml
+include MANIFEST.in
+
+include docs/*.md
+recursive-include docs/charts *.png
+include tools/*.py
+recursive-include benchmarks *.csv *.md
+include run_tests.py
+
+recursive-include python *.py *.pyi
+recursive-include crates *.rs *.toml
+recursive-include tests *.py *.json *.txt
+recursive-include examples *.py
+
+# Never ship build outputs or bytecode.
+prune target
+prune crates/dual6-py/target
+global-exclude __pycache__ *.py[cod] *.pyd *.so *.dll

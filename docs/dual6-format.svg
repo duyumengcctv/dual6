@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="248" viewBox="0 0 900 248" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="24" y="34" font-size="15" font-weight="600" fill="#212529">One symbol, two views</text>
+<text x="24" y="54" font-size="12" fill="#6c757d">d = 3·b + (t + 1)</text>
+<rect x="24" y="74" width="86" height="26" rx="6" fill="#F1F3F5" stroke="#DEE2E6"/>
+<text x="32" y="92" font-size="11.5" fill="#343a40" font-family="ui-monospace,Consolas,monospace">d=0   b=0  t=-1</text>
+<rect x="120" y="74" width="86" height="26" rx="6" fill="#F76707" stroke="#F76707"/>
+<text x="128" y="92" font-size="11.5" fill="#ffffff" font-family="ui-monospace,Consolas,monospace">d=1   b=0  t=0</text>
+<rect x="216" y="74" width="86" height="26" rx="6" fill="#F1F3F5" stroke="#DEE2E6"/>
+<text x="224" y="92" font-size="11.5" fill="#343a40" font-family="ui-monospace,Consolas,monospace">d=2   b=0  t=+1</text>
+<rect x="24" y="108" width="86" height="26" rx="6" fill="#F1F3F5" stroke="#DEE2E6"/>
+<text x="32" y="126" font-size="11.5" fill="#343a40" font-family="ui-monospace,Consolas,monospace">d=3   b=1  t=-1</text>
+<rect x="120" y="108" width="86" height="26" rx="6" fill="#F1F3F5" stroke="#DEE2E6"/>
+<text x="128" y="126" font-size="11.5" fill="#343a40" font-family="ui-monospace,Consolas,monospace">d=4   b=1  t=0</text>
+<rect x="216" y="108" width="86" height="26" rx="6" fill="#F1F3F5" stroke="#DEE2E6"/>
+<text x="224" y="126" font-size="11.5" fill="#343a40" font-family="ui-monospace,Consolas,monospace">d=5   b=1  t=+1</text>
+<text x="24" y="160" font-size="11" fill="#868e96">b = d // 3        t = d % 3 - 1        (orange = the Dual6 zero)</text>
+<text x="470" y="34" font-size="15" font-weight="600" fill="#212529">D6P2 layout (dual-plane)</text>
+<text x="470" y="54" font-size="12" fill="#6c757d">one file · one CRC · one version</text>
+<rect x="470" y="74" width="56" height="44" fill="#495057" rx="3"/>
+<text x="498.0" y="93" font-size="11.5" fill="#ffffff" text-anchor="middle">header</text>
+<text x="498.0" y="108" font-size="9.5" fill="#ffffff" opacity="0.85" text-anchor="middle">33 B</text>
+<rect x="526" y="74" width="150" height="44" fill="#F76707" rx="3"/>
+<text x="601.0" y="93" font-size="11.5" fill="#ffffff" text-anchor="middle">bit plane</text>
+<text x="601.0" y="108" font-size="9.5" fill="#ffffff" opacity="0.85" text-anchor="middle">ceil(n/8) B · 1.0 bpw</text>
+<rect x="676" y="74" width="200" height="44" fill="#4C6EF5" rx="3"/>
+<text x="776.0" y="93" font-size="11.5" fill="#ffffff" text-anchor="middle">trit plane</text>
+<text x="776.0" y="108" font-size="9.5" fill="#ffffff" opacity="0.85" text-anchor="middle">ceil(n/5) B · 1.6 bpw</text>
+<path d="M601 118 L601 140" stroke="#F76707" stroke-width="1.5" fill="none"/>
+<text x="601" y="156" font-size="11" fill="#F76707" text-anchor="middle">binary engine</text>
+<path d="M776 118 L776 140" stroke="#4C6EF5" stroke-width="1.5" fill="none"/>
+<text x="776" y="156" font-size="11" fill="#4C6EF5" text-anchor="middle">ternary engine</text>
+<text x="470" y="190" font-size="11" fill="#868e96">each engine reads only its own bytes — no conversion, no copy</text>
+<text x="470" y="210" font-size="11" fill="#868e96">FLAG_OMIT_BIT_PLANE drops the orange segment for trit-only payloads (1.6 bpw)</text>
+</svg>

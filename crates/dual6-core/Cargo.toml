@@ -1,0 +1,8 @@
+[package]
+name = "dual6-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Dual6 storage container core. Storage only, no arithmetic."
+
+[dependencies]

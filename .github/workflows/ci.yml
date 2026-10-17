@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  # Pure-Python reference backend across supported interpreters.
+  ref-matrix:
+    name: ref / py${{ matrix.python }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install (portable, no Rust)
+        run: python -m pip install -e ".[dev]"
+      - name: Release gate (skip Rust)
+        run: python tools/check_all.py --skip-rust
+      - name: Coverage
+        run: python tools/coverage.py --html
+
+  # Native PyO3 backend: build the extension and force it on.
+  native:
+    name: native / py3.11
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install dev deps
+        run: python -m pip install -e ".[dev]"
+      - name: Build native extension
+        run: python tools/build_native.py --python "$(command -v python)" --skip-tests
+      - name: Rust core/ffi tests
+        run: cargo test
+      - name: Release gate on native backend
+        env:
+          DUAL6_BACKEND: native
+        run: python tools/check_all.py --skip-rust
+
+  # Packaging: build wheel + sdist, inspect, install into a throw-away venv.
+  package:
+    name: package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install dev deps
+        run: python -m pip install -e ".[dev]"
+      - name: Verify wheel + sdist + install
+        run: python tools/verify_package.py --build --install-test
