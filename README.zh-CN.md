@@ -9,7 +9,7 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="tests" src="https://img.shields.io/badge/tests-283%20passing-brightgreen.svg">
+  <img alt="tests" src="https://img.shields.io/badge/tests-284%20passing-brightgreen.svg">
   <img alt="python" src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg">
   <img alt="rust" src="https://img.shields.io/badge/rust-2021-DEA584.svg">
   <img alt="status" src="https://img.shields.io/badge/status-dormant-lightgrey.svg">
@@ -107,7 +107,7 @@ Dual6 存**一份**制品，其中：
 
 ```bash
 pip install -e .                  # 在仓库根目录
-python run_tests.py               # 283 项测试
+python run_tests.py               # 284 项测试
 python tools/build_native.py      # 可选：构建 Rust 扩展（更快，输出字节相同）
 ```
 
@@ -168,7 +168,14 @@ let (bits, trits) = dual6_core::demux(&symbols)?;
 | 就地同尺寸覆盖 + 裸加载器 | 静默损坏在 **64 KiB 到 512 KiB** 之间开始出现；8 MiB 时 26.5% 的读 |
 
 <p align="center">
-  <img alt="静默损坏率 vs 载荷大小" src="benchmarks/charts/18-fault-size.png" width="560">
+  <img alt="九种编码：存储 vs 解码成本" src="benchmarks/charts/scorecard.png" width="620"><br>
+  <sub>测试台里的全部编码。星号是 trit-only 帧：与 TQ1_0 同一套字节，外加一次 CRC。
+  稠密编码解包快一个数量级，但存储要多五倍。</sub>
+</p>
+
+<p align="center">
+  <img alt="静默损坏率 vs 载荷大小" src="benchmarks/charts/fault-size.png" width="560"><br>
+  <sub>无校验容器的就地同尺寸覆盖：64 KiB 以下为零，512 KiB 是 1.5%，8 MiB 是 26.5%。</sub>
 </p>
 
 ## 结果
@@ -206,6 +213,11 @@ let (bits, trits) = dual6_core::demux(&symbols)?;
 同一个 kernel 在同一遍里读两者。一条顺序流，没有指针跳转，没有第二个文件会失步。
 掩码聚集时 `layout 1` 再省 **−24.7% ~ −32.9%**。
 
+<p align="center">
+  <img alt="压缩 bit 平面 vs 掩码结构" src="benchmarks/charts/mask-structure.png" width="600"><br>
+  <sub>同样 5% 密度、五种排列、每种 5 次重复。聚集掩码省 25–33%；周期散射反而贵 1.5%。</sub>
+</p>
+
 *什么时候不对*：两个通道不是逐元素对齐的。今天的格式基本都这样——
 AWQ / OWQ 用 per-*channel* scale，SpQR / SqueezeLLM 用稀疏索引，
 **正是因为对齐的第二通道更贵**。所以**这个场景目前是假设性的**：
@@ -215,6 +227,11 @@ AWQ / OWQ 用 per-*channel* scale，SpQR / SqueezeLLM 用稀疏索引，
 
 落在 **1.60 bpw、59.2 ns/元素**，与 `TQ1_0`（1.60 / 59.3）持平，另外白得 CRC32
 和单对象帧。适合慢介质与小机器：一次 `open`、一次 `mmap`、一次校验。
+
+<p align="center">
+  <img alt="压缩 bit 平面 vs 掩码密度" src="benchmarks/charts/sparse-plane.png" width="600"><br>
+  <sub>同一选项的密度扫描：掩码越稀收益越大，超过约 10% 后收益消失。</sub>
+</p>
 
 *什么时候不对*：数据本来就快。**单帧加载并不更快**——最好情况 ±5% 内等价，
 多轮重复下稳定慢约 2%——在 NVMe 或 cache 驻留场景里，帧头是纯开销。
@@ -300,6 +317,7 @@ BitNet 这类三值模型存的是三值，算的是 FP16，bit 通道没有消�
 | [`docs/12-arithmetic.md`](docs/12-arithmetic.md) | 可选的 exact-dual 算术助手 |
 | [`docs/13-use-cases.md`](docs/13-use-cases.md) | 适用 / 不适用 / 在等什么 |
 | [`benchmarks/README.md`](benchmarks/README.md) | 每份 CSV 测了什么、在哪台机器上 |
+| [`tools/make_charts.py`](tools/make_charts.py) | 从 CSV 重新生成全部四张图 |
 
 ## 仓库结构
 
@@ -308,7 +326,7 @@ python/dual6/      参考实现（含适配层、CLI、mmap）
 crates/            dual6-core（Rust）、dual6-py（PyO3）、dual6-ffi（C ABI）
 docs/              规格文档，一个主题一个文件
 benchmarks/        测量套件的 5 份 CSV + 3 张图
-tests/             283 项测试，含“文档驱动”的规格测试
+tests/             284 项测试，含“文档驱动”的规格测试
 examples/          三个可直接运行的程序
 tools/             build_native.py、check_version.py、native_coverage.py
 ```
@@ -316,7 +334,7 @@ tools/             build_native.py、check_version.py、native_coverage.py
 ## 测试
 
 ```bash
-python run_tests.py                        # 283
+python run_tests.py                        # 284
 DUAL6_BACKEND=ref python run_tests.py      # 只用参考实现
 cargo test -p dual6-core                   # Rust 核心
 ```

@@ -41,7 +41,18 @@ class DataFiles(unittest.TestCase):
     def test_charts_exist(self):
         charts = os.path.join(BENCH, "charts")
         found = sorted(f for f in os.listdir(charts) if f.endswith(".png"))
-        self.assertEqual(len(found), 3, found)
+        self.assertEqual(
+            found,
+            ["fault-size.png", "mask-structure.png", "scorecard.png", "sparse-plane.png"],
+        )
+
+    def test_every_chart_is_referenced_by_a_readme(self):
+        for readme in ("README.md", "README.zh-CN.md"):
+            text = read(readme)
+            for name in ("scorecard.png", "sparse-plane.png", "mask-structure.png",
+                         "fault-size.png"):
+                with self.subTest(readme=readme, chart=name):
+                    self.assertIn("benchmarks/charts/" + name, text)
 
 
 class Scorecard(unittest.TestCase):
@@ -178,7 +189,7 @@ class ReadmeQuotes(unittest.TestCase):
         if not os.path.exists(os.path.join(ROOT, "README.zh-CN.md")):
             self.skipTest("no Chinese README")
         zh = read("README.zh-CN.md")
-        for claim in ("1.60 bpw", "59.2 ns", "62.5%", "−25%", "64 KiB", "283"):
+        for claim in ("1.60 bpw", "59.2 ns", "62.5%", "−25%", "64 KiB", "284"):
             with self.subTest(claim=claim):
                 self.assertIn(claim, zh)
         self.assertIn("README.md", zh)          # language switcher back

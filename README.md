@@ -9,7 +9,7 @@ A storage container for the day a binary engine and a ternary engine have to rea
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="tests" src="https://img.shields.io/badge/tests-283%20passing-brightgreen.svg">
+  <img alt="tests" src="https://img.shields.io/badge/tests-284%20passing-brightgreen.svg">
   <img alt="python" src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg">
   <img alt="rust" src="https://img.shields.io/badge/rust-2021-DEA584.svg">
   <img alt="status" src="https://img.shields.io/badge/status-dormant-lightgrey.svg">
@@ -115,7 +115,7 @@ Two `D6P2` options:
 
 ```bash
 pip install -e .                  # from the repository root
-python run_tests.py               # 283 tests
+python run_tests.py               # 284 tests
 python tools/build_native.py      # optional: Rust extension (faster, same bytes)
 ```
 
@@ -177,7 +177,16 @@ each with a note describing the method and the machine.
 | in-place same-size overwrite, naive loader | silent corruption starts between **64 KiB and 512 KiB**; 26.5% of reads at 8 MiB |
 
 <p align="center">
-  <img alt="silent corruption vs payload size" src="benchmarks/charts/18-fault-size.png" width="560">
+  <img alt="nine encodings: storage against decode cost" src="benchmarks/charts/scorecard.png" width="620"><br>
+  <sub>Every encoding in the battery. The star is the trit-only frame: the same bytes as
+  TQ1_0, plus a CRC. A dense format decodes an order of magnitude faster and stores five
+  times as much.</sub>
+</p>
+
+<p align="center">
+  <img alt="silent corruption vs payload size" src="benchmarks/charts/fault-size.png" width="560"><br>
+  <sub>In-place same-size overwrite of a checksum-less container: nothing below 64 KiB,
+  1.5% at 512 KiB, 26.5% at 8 MiB.</sub>
 </p>
 
 ## What came of it
@@ -222,6 +231,12 @@ mask (outlier, prune, "use the high-precision copy") that the same kernel reads
 in the same pass. One stream, no pointer chasing, no second file to fall out of
 sync. With a clustered mask, `layout 1` adds **−25% to −33%** on top.
 
+<p align="center">
+  <img alt="compacted bit plane vs mask structure" src="benchmarks/charts/mask-structure.png" width="600"><br>
+  <sub>Same 5% density, five arrangements, five replicates each. Clustered masks save
+  25–33%; a periodic scatter costs 1.5%.</sub>
+</p>
+
 *Wrong when* the two channels are not element-aligned. That is most formats
 today: AWQ and OWQ keep per-*channel* scales, SpQR and SqueezeLLM keep sparse
 indices — both deliberately avoid an aligned second channel, which is exactly
@@ -234,6 +249,12 @@ container is ready for it, not proof that it exists.
 Lands at **1.60 bpw and 59.2 ns/element**, the same as `TQ1_0` (1.60 / 59.3),
 while adding a CRC32 and a single-object frame. Cheap for slow media and small
 machines: one `open`, one `mmap`, one checksum.
+
+<p align="center">
+  <img alt="compacted bit plane vs mask density" src="benchmarks/charts/sparse-plane.png" width="600"><br>
+  <sub>Density sweep for the same option: the saving grows as the mask thins, and
+  disappears above ~10%.</sub>
+</p>
 
 *Wrong when* the data is already fast. A single frame is **not** faster to load
 — measured equivalent at best, ~2% slower in repeated runs — so on an NVMe
@@ -319,6 +340,7 @@ it does not explain them.
 | [`docs/12-arithmetic.md`](docs/12-arithmetic.md) | optional exact-dual arithmetic helper |
 | [`docs/13-use-cases.md`](docs/13-use-cases.md) | where it fits, where it does not, what it waits for |
 | [`benchmarks/README.md`](benchmarks/README.md) | what each CSV measured, on what machine |
+| [`tools/make_charts.py`](tools/make_charts.py) | regenerates all four charts from the CSVs |
 
 ## Repository layout
 
@@ -327,7 +349,7 @@ python/dual6/      reference implementation (+ adapters, CLI, mmap)
 crates/            dual6-core (Rust), dual6-py (PyO3), dual6-ffi (C ABI)
 docs/              the specification, one topic per file
 benchmarks/        5 CSVs + 3 charts from the measurement suite
-tests/             283 tests, including spec-derived ones
+tests/             284 tests, including spec-derived ones
 examples/          three runnable programs
 tools/             build_native.py, check_version.py, native_coverage.py
 ```
@@ -335,7 +357,7 @@ tools/             build_native.py, check_version.py, native_coverage.py
 ## Tests
 
 ```bash
-python run_tests.py                        # 283
+python run_tests.py                        # 284
 DUAL6_BACKEND=ref python run_tests.py      # reference backend only
 cargo test -p dual6-core                   # Rust core
 ```

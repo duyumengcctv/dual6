@@ -79,9 +79,14 @@ Loaders: bare parse, length check, sha256 check.
 
 | file | shows |
 |---|---|
-| `charts/16-sparse-plane.png` | size change vs mask density, three block sizes |
-| `charts/18-fault-size.png` | silent corrupt reads vs payload size |
-| `charts/19-mask-structure.png` | size change vs mask structure, 5 replicates with ranges |
+| `charts/scorecard.png` | storage against decode cost for all nine encodings |
+| `charts/sparse-plane.png` | size change vs mask density, three block sizes |
+| `charts/mask-structure.png` | size change vs mask structure, 5 replicates with ranges |
+| `charts/fault-size.png` | silent corrupt reads vs payload size |
 
-All three can be reproduced from the CSVs in this directory with any plotting
-library; the axes and the underlying numbers are the CSV columns.
+All four are generated from the CSVs in this directory:
+
+```bash
+pip install matplotlib
+python tools/make_charts.py
+```
