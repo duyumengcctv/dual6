@@ -9,8 +9,8 @@
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="tests" src="https://img.shields.io/badge/tests-284%20passing-brightgreen.svg">
-  <img alt="python" src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg">
+  <img alt="tests" src="https://img.shields.io/badge/tests-293%20passing-brightgreen.svg">
+  <img alt="python" src="https://img.shields.io/badge/python-3.9%2B-3776AB.svg">
   <img alt="rust" src="https://img.shields.io/badge/rust-2021-DEA584.svg">
   <img alt="status" src="https://img.shields.io/badge/status-dormant-lightgrey.svg">
 </p>
@@ -107,7 +107,7 @@ Dual6 存**一份**制品，其中：
 
 ```bash
 pip install -e .                  # 在仓库根目录
-python run_tests.py               # 284 项测试
+python run_tests.py               # 293 项测试
 python tools/build_native.py      # 可选：构建 Rust 扩展（更快，输出字节相同）
 ```
 
@@ -158,7 +158,7 @@ let (bits, trits) = dual6_core::demux(&symbols)?;
 
 ## 测量
 
-原始数据在 [`benchmarks/`](benchmarks/README.md)——5 份 CSV 和 3 张图，
+原始数据在 [`benchmarks/`](benchmarks/README.md)——5 份 CSV 和 4 张图，
 每份都附了测量方法与机器说明。
 
 | 测了什么 | 结果 |
@@ -313,6 +313,7 @@ BitNet 这类三值模型存的是三值，算的是 FP16，bit 通道没有消�
 | [`docs/04-frame.md`](docs/04-frame.md) | `D6P0` / `D6P1` / `D6P2`、flags、布局 |
 | [`docs/05-errors.md`](docs/05-errors.md) | 错误码 |
 | [`docs/08-api.md`](docs/08-api.md) | 公开 API |
+| [`docs/09-release.md`](docs/09-release.md) | 构建、测试与发布 |
 | [`docs/11-exact-dual.md`](docs/11-exact-dual.md) | 可选编解码：一个整数，两种视图 |
 | [`docs/12-arithmetic.md`](docs/12-arithmetic.md) | 可选的 exact-dual 算术助手 |
 | [`docs/13-use-cases.md`](docs/13-use-cases.md) | 适用 / 不适用 / 在等什么 |
@@ -325,16 +326,16 @@ BitNet 这类三值模型存的是三值，算的是 FP16，bit 通道没有消�
 python/dual6/      参考实现（含适配层、CLI、mmap）
 crates/            dual6-core（Rust）、dual6-py（PyO3）、dual6-ffi（C ABI）
 docs/              规格文档，一个主题一个文件
-benchmarks/        测量套件的 5 份 CSV + 3 张图
-tests/             284 项测试，含“文档驱动”的规格测试
+benchmarks/        测量套件的 5 份 CSV + 4 张图
+tests/             293 项测试，含“文档驱动”的规格测试
 examples/          三个可直接运行的程序
-tools/             build_native.py、check_version.py、native_coverage.py
+tools/             check_all.py、coverage.py、verify_package.py、build_native.py 等
 ```
 
 ## 测试
 
 ```bash
-python run_tests.py                        # 284
+python run_tests.py                        # 293
 DUAL6_BACKEND=ref python run_tests.py      # 只用参考实现
 cargo test -p dual6-core                   # Rust 核心
 ```

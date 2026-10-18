@@ -175,7 +175,7 @@ pub fn unpack_dual_plane_v1(data: &[u8]) -> Dual6Result<(Vec<u8>, Vec<i8>)> {
     let payload_len = read_u32_le(data, 12) as usize;
     let stored_crc = read_u32_le(data, 16);
     let expected_payload_len = (width + 7) / 8 + (width + TRIT_PER_BYTE - 1) / TRIT_PER_BYTE;
-    if expected_payload_len != usize::MAX && payload_len != expected_payload_len {
+    if payload_len != expected_payload_len {
         return Err(Dual6Error::new(
             ErrorCode::InvalidLayout,
             format!("payload length {payload_len} != expected {expected_payload_len}"),

@@ -46,6 +46,11 @@ fn copy_out(bytes: &[u8], out: *mut u8, capacity: usize) -> i32 {
     if bytes.len() > capacity {
         return DUAL6_ERR_BUFFER_TOO_SMALL;
     }
+    // The C ABI reports the count as i32; refuse inputs larger than that
+    // instead of silently wrapping the return value.
+    if bytes.len() > i32::MAX as usize {
+        return DUAL6_ERR_INVALID_ARG;
+    }
     if !bytes.is_empty() {
         if out.is_null() {
             return DUAL6_ERR_INVALID_ARG;

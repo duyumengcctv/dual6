@@ -315,21 +315,52 @@ def _error_conformance(ref: Any, native: Any) -> List[str]:
 
     err("encode_digit", 2, 0)
     err("encode_digit", 0, 2)
+    # Values that overflow the Rust scalar types are converted by PyO3 before
+    # the function runs; the wrapper must still report the reference error code.
+    err("encode_digit", 300, 0)
+    err("encode_digit", 0, 300)
+    err("encode_digit", 1.0, 0)
+    err("encode_digit", 0, 1.0)
     err("decode_digit", 6)
     err("decode_digit", -1)
+    err("decode_digit", 300)
+    err("decode_digit", 1.0)
+    err("decode_digit", True)  # bool is an int subclass on both backends
     err("mux", [0, 1], [0])
+    err("mux", [300], [0])
+    err("mux", [0], [-300])
+    err("mux", [1.0], [0])
+    err("demux", [300])
+    err("demux", [1.0])
     err("pack_digits", [0, 6])
+    err("pack_digits", [True])
     err("unpack_digits", 1000, 5)
     err("unpack_digits", 0, -1)
     err("max_interleaved", -1)
+    err("max_interleaved", True)
+    err("unpack_digits", 1, True)
+    err("unpack_digits", True, 1)
+    err("fits_unsigned_word", True, True)
+    err("max_interleaved", 10 ** 9)
+    err("unpack_digits", 1, 2 ** 70)
     err("fits_unsigned_word", -1, 8)
+    # word_bits beyond u32 used to overflow the native helper; both backends
+    # must return the same answer without materialising huge integers.
+    err("fits_unsigned_word", 1, 10 ** 12)
+    err("fits_unsigned_word", 10 ** 12, 64)
     err("pack_bits_bytes", [2])
+    err("pack_bits_bytes", [0.0] * 8)
+    err("pack_bits_bytes", [300])
     err("unpack_bits_bytes", b"\x01", 3)
     err("unpack_bits_bytes", b"\x00", 0)
     err("pack_trits_bytes", [2])
+    err("pack_trits_bytes", [1.0] * 5)
+    err("pack_trits_bytes", [300])
     err("unpack_trits_bytes", b"\xff", 1)
     err("unpack_trits_bytes", b"\x00\x00", 1)
     err("pack_block64", [0] * 23)
+    err("pack_block64", [300] * 24)
+    err("pack_block64", [True] * 24)
     err("pack_block64_many", [0] * 23)
     err("pack_block64_many_into", bytes([0] * 23), bytearray(8), 0)
     err("unpack_block64_many_into", bytes([0] * 7), bytearray(24), 0)
@@ -341,6 +372,7 @@ def _error_conformance(ref: Any, native: Any) -> List[str]:
     err("pack_block40", [0] * 39)
     err("unpack_block40", b"\x00" * 12)
     err("pack_block64_dp", [0] * 23, [0] * 23)
+    err("pack_block64_dp", [1] * 24, [300] * 24)
     err("unpack_block64_dp", b"\x00" * 7)
     err("pack_dual_plane", [0, 1], [0])
     err("unpack_dual_plane", b"XXXX" + b"\x00" * 20)
@@ -353,6 +385,9 @@ def _error_conformance(ref: Any, native: Any) -> List[str]:
         frame[-1] ^= 0xFF
         err("unpack_dual_plane_v1", bytes(frame))
 
+    if has("pack_bits_into"):
+        err("pack_bits_into", [0.0] * 8, bytearray(1), 0)
+        err("pack_bits_into", [300], bytearray(1), 0)
     if has("pack_dual_plane_into"):
         err("pack_dual_plane_into", [0] * 100, [0] * 100, bytearray(4), 0)
     if has("unpack_bits_from"):

@@ -80,6 +80,22 @@ class TestInterleaved(unittest.TestCase):
         self.assertTrue(fits_unsigned_word(5000, 13000))
         self.assertFalse(fits_unsigned_word(5000, 12900))
 
+    def test_pathological_width_is_cheap(self) -> None:
+        # Regression: scalar widths used to materialise 6 ** width and hang.
+        cases = (
+            (unpack_digits, (1, 2 ** 70)),
+            (unpack_digits, (0, 10 ** 12)),
+            (max_interleaved, (10 ** 9,)),
+        )
+        for fn, args in cases:
+            with self.subTest(fn=fn.__name__, args=args):
+                with self.assertRaises(Dual6Error) as ctx:
+                    fn(*args)
+                self.assertEqual(ctx.exception.code, ErrorCode.INVALID_PACKING)
+        # A huge word size must not materialise 1 << word_bits either.
+        self.assertTrue(fits_unsigned_word(1, 10 ** 12))
+        self.assertFalse(fits_unsigned_word(10 ** 12, 64))
+
     def test_large_width_falls_back_to_ref(self) -> None:
         # The Rust u128 helper only supports <= 48 symbols; the package must
         # transparently fall back to the pure-Python path beyond that.

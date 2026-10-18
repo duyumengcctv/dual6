@@ -9,8 +9,8 @@ A storage container for the day a binary engine and a ternary engine have to rea
 
 <p align="center">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img alt="tests" src="https://img.shields.io/badge/tests-284%20passing-brightgreen.svg">
-  <img alt="python" src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg">
+  <img alt="tests" src="https://img.shields.io/badge/tests-293%20passing-brightgreen.svg">
+  <img alt="python" src="https://img.shields.io/badge/python-3.9%2B-3776AB.svg">
   <img alt="rust" src="https://img.shields.io/badge/rust-2021-DEA584.svg">
   <img alt="status" src="https://img.shields.io/badge/status-dormant-lightgrey.svg">
 </p>
@@ -115,7 +115,7 @@ Two `D6P2` options:
 
 ```bash
 pip install -e .                  # from the repository root
-python run_tests.py               # 284 tests
+python run_tests.py               # 293 tests
 python tools/build_native.py      # optional: Rust extension (faster, same bytes)
 ```
 
@@ -167,7 +167,7 @@ required to produce byte-identical output.
 
 ## Measurements
 
-Raw data in [`benchmarks/`](benchmarks/README.md) — five CSVs and three charts,
+Raw data in [`benchmarks/`](benchmarks/README.md) — five CSVs and four charts,
 each with a note describing the method and the machine.
 
 | What was measured | Result |
@@ -336,6 +336,7 @@ it does not explain them.
 | [`docs/04-frame.md`](docs/04-frame.md) | `D6P0` / `D6P1` / `D6P2`, flags, layouts |
 | [`docs/05-errors.md`](docs/05-errors.md) | error codes |
 | [`docs/08-api.md`](docs/08-api.md) | public API |
+| [`docs/09-release.md`](docs/09-release.md) | build, test and release the package |
 | [`docs/11-exact-dual.md`](docs/11-exact-dual.md) | optional codec: one integer, two views |
 | [`docs/12-arithmetic.md`](docs/12-arithmetic.md) | optional exact-dual arithmetic helper |
 | [`docs/13-use-cases.md`](docs/13-use-cases.md) | where it fits, where it does not, what it waits for |
@@ -348,16 +349,16 @@ it does not explain them.
 python/dual6/      reference implementation (+ adapters, CLI, mmap)
 crates/            dual6-core (Rust), dual6-py (PyO3), dual6-ffi (C ABI)
 docs/              the specification, one topic per file
-benchmarks/        5 CSVs + 3 charts from the measurement suite
-tests/             284 tests, including spec-derived ones
+benchmarks/        5 CSVs + 4 charts from the measurement suite
+tests/             293 tests, including spec-derived ones
 examples/          three runnable programs
-tools/             build_native.py, check_version.py, native_coverage.py
+tools/             check_all.py, coverage.py, verify_package.py, build_native.py, ...
 ```
 
 ## Tests
 
 ```bash
-python run_tests.py                        # 284
+python run_tests.py                        # 293
 DUAL6_BACKEND=ref python run_tests.py      # reference backend only
 cargo test -p dual6-core                   # Rust core
 ```

@@ -12,7 +12,6 @@ from types import TracebackType
 from typing import List, Optional, Tuple, Type
 
 from .errors import Dual6Error, ErrorCode
-from .frame import unpack_frame_auto
 
 
 def write_frame(path: str | os.PathLike[str], frame: bytes) -> int:
@@ -67,12 +66,9 @@ class MappedFrame:
         Prefer the native buffer decoder when it is available; it reads the
         mmap through PyBuffer without copying the whole file into a Vec.
         """
-        try:
-            from .. import unpack_frame_auto_buffer as native_unpack
+        from .. import unpack_frame_auto_buffer
 
-            return native_unpack(self._mm)
-        except ImportError:
-            return unpack_frame_auto(self._mm)
+        return unpack_frame_auto_buffer(self._mm)
 
 
 def main_check(path: str | os.PathLike[str]) -> dict:

@@ -8,12 +8,12 @@ from .. import Dual6Error, ErrorCode, demux, mux, pack_block64_dp, unpack_block6
 
 
 def _check_trit(trit: int) -> None:
-    if trit not in (-1, 0, 1):
+    if not isinstance(trit, int) or trit not in (-1, 0, 1):
         raise Dual6Error(ErrorCode.INVALID_TRIT, f"trit must be -1, 0 or 1, got {trit!r}")
 
 
 def _check_fill_bit(fill_bit: int) -> None:
-    if fill_bit not in (0, 1):
+    if not isinstance(fill_bit, int) or fill_bit not in (0, 1):
         raise Dual6Error(ErrorCode.INVALID_BIT, f"fill_bit must be 0 or 1, got {fill_bit!r}")
 
 

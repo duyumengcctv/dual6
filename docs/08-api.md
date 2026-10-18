@@ -131,6 +131,19 @@ GGUF ↔ Dual6 互操作
 需要这些能力的下游项目，请在冻结的 core API（容器层 + 二进制 / 三进制单通道
 桥接）之上自行构建。
 
+## 输入校验
+
+- bit 必须是整数 `0` / `1`，trit 必须是整数 `-1` / `0` / `1`，码元必须是整数
+  `0..5`；越界返回对应的 `INVALID_BIT` / `INVALID_TRIT` / `INVALID_DIGIT`。
+- `bool` 是 `int` 的子类，两个后端都按 `0` / `1` 接受。
+- 浮点（例如 `1.0`）、字符串等非整数一律拒绝，不会因为 `1.0 == 1` 被静默接受。
+- 参考实现和 native 扩展对同一非法输入必须抛出**相同错误码**；该约束由
+  `python/dual6/_conformance.py` 和 `tests/test_input_validation.py` 覆盖。
+- `unpack_digits` / `max_interleaved` 的宽度上限为 1,000,000 个码元；
+  超限返回 `INVALID_PACKING`，不会尝试物化 `6 ** width`。
+- `fits_unsigned_word` 对超大 `word_bits` 走 log2 比较，不会物化
+  `1 << word_bits`。
+
 ## 版本规则
 
 ```text

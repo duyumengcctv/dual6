@@ -10,7 +10,7 @@
 | `INVALID_TRIT` | trit 不在 `{-1,0,1}` |
 | `INVALID_LAYOUT` | 长度、magic、填充位非法 |
 | `UNSUPPORTED_VERSION` | 帧版本不支持 |
-| `CRC_MISMATCH` | D6P1 帧 CRC32 不匹配 |
+| `CRC_MISMATCH` | D6P1 / D6P2 帧 CRC32 不匹配 |
 
 Python 中抛出 `Dual6Error`，错误码在 `error.code`。
 

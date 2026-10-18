@@ -18,6 +18,8 @@ Thumbs.db
 .idea/
 .vscode/
 .coverage
+.coverage.*
+coverage.xml
 htmlcov/
 
 # Packaging

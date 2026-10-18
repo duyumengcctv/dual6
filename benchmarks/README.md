@@ -29,9 +29,39 @@ Payload `trit` = one balanced trit per element; `dual` = a `(bit, trit)` pair.
 | `selective_bytes` | bytes that must be read to serve one channel only |
 | `integrity`, `single_object` | does the container carry a checksum / can it be published as one object |
 
-Headline: `Dual6 dual-plane (trit-only frame)` stores **1.60 bpw** and decodes at
-**59.2 ns/element**, versus TQ1_0 at 1.60 bpw / 59.3 ns — the same byte layout,
-plus a CRC and a frame header.
+### Summary
+
+Nine encodings, one battery, two payloads (15 rows). Pure-trit payload:
+
+| Encoding | bpw | decode ns | random ns | sparse 5% ns | selective B | CRC | one object |
+|---|---:|---:|---:|---:|---:|:-:|:-:|
+| fp16 dense | 16.00 | 23.9 | 71.5 | 60.2 | 131072 | — | — |
+| int8 dense | 8.00 | **0.1** | **21.3** | **14.1** | 65536 | — | ✓ |
+| TQ1_0 | **1.60** | 59.3 | 90.5 | 77.8 | 13108 | — | ✓ |
+| TQ2_0 | 2.00 | 48.5 | 62.4 | 57.7 | 16384 | — | ✓ |
+| 6-state 3-bit slot | 3.00 | 230.4 | 114.1 | 103.5 | 24576 | — | ✓ |
+| **Dual6 dual-plane** | 2.60 | 119.1 | 211.5 | 170.5 | 13108 | **✓** | ✓ |
+| **Dual6 dual-plane (trit-only)** | **1.60** | 59.2 | 92.4 | 76.6 | 13108 | **✓** | ✓ |
+| **Dual6 interleaved (13 bit)** | 2.60 | 113.6 | 343.6 | 319.9 | 21301 | ✓ | ✓ |
+| two separate arrays | **1.60** | 80.0 | 120.1 | 98.8 | 13108 | — | — |
+
+What the columns say, without spin:
+
+- **no column is swept.** Cheapest storage goes to TQ1_0 / two arrays / the
+  trit-only frame; fastest decode, fastest random access and fastest gather all
+  go to int8; the only encodings carrying a checksum are the three Dual6 ones.
+- **the trit-only frame is TQ1_0 plus a CRC**: 1.60 bpw, 59.2 vs 59.3 ns
+  (−0.3%, inside noise), plus a 32-bit checksum and a single-object frame.
+- **int8 decodes 592× faster and stores 5× more.** That ratio is the whole
+  trade-off in one line.
+- **the dual payload costs 1.62×** the storage of the trit-only one
+  (2.60 vs 1.60 bpw) — that is what the second channel is worth.
+- **selective read is the one structural difference**: on a dual payload the
+  dual-plane frame needs **8192 B** to serve one channel, while int8 needs
+  131072 B and the interleaved layout 21301 B, because those layouts weave the
+  channels together.
+
+Full digest: `scorecard_raw.csv` (15 rows × 13 columns).
 
 ## `sparse_plane.csv` — does a compacted bit plane pay off?
 

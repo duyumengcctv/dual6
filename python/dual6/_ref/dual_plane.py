@@ -12,6 +12,7 @@ fast on platforms without the native extension.
 from __future__ import annotations
 
 import itertools
+from array import array
 from typing import List, Sequence
 
 from .errors import Dual6Error, ErrorCode
@@ -43,8 +44,30 @@ _TRIT_GROUP = {
 }
 
 
+def _require_ints(values: Sequence[int], code: ErrorCode, label: str) -> None:
+    """Reject non-integer elements before the table lookups.
+
+    The lookup tables are keyed by ``(0, 1, ...)`` tuples, and Python considers
+    ``0.0 == 0`` with the same hash, so a float would silently match a valid
+    key.  ``array('b', ...)`` validates the element types at C speed (and
+    rejects values outside a signed byte); range checking for 2..127 is still
+    done by the table lookup / slow path below.
+    """
+    try:
+        array("b", values)
+    except TypeError as exc:
+        raise Dual6Error(
+            code, f"{label} values must be integers, got {exc}"
+        ) from exc
+    except (OverflowError, ValueError) as exc:
+        raise Dual6Error(
+            code, f"{label} value out of range, got {exc}"
+        ) from exc
+
+
 def pack_bits_bytes(bits: Sequence[int]) -> bytes:
     """Pack bits LSB-first into bytes; unused high bits are zero."""
+    _require_ints(bits, ErrorCode.INVALID_BIT, "bit")
     n = len(bits)
     out = bytearray((n + 7) // 8)
     for base in range(0, n - 7, 8):
@@ -105,6 +128,7 @@ def unpack_bits_bytes(data: bytes, width: int) -> List[int]:
 
 def pack_trits_bytes(trits: Sequence[int]) -> bytes:
     """Pack balanced trits, 5 trits per byte, LSB-first within each group."""
+    _require_ints(trits, ErrorCode.INVALID_TRIT, "trit")
     n = len(trits)
     out = bytearray()
     full = n - n % TRIT_PER_BYTE

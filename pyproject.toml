@@ -39,8 +39,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://example.invalid/dual6"
-Documentation = "https://example.invalid/dual6/docs"
+Homepage = "https://github.com/duyumengcctv/dual6"
+Documentation = "https://github.com/duyumengcctv/dual6/tree/main/docs"
 
 [project.optional-dependencies]
 dev = ["coverage", "build", "tomli; python_version < '3.11'"]

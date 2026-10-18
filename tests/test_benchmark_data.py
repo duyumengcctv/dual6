@@ -68,6 +68,45 @@ class Scorecard(unittest.TestCase):
         self.assertAlmostEqual(float(dual6["decode_ns_net"]), 59.2, delta=1.0)
 
 
+class ScorecardSummary(unittest.TestCase):
+    """The summary table in benchmarks/README.md must match the CSV."""
+
+    def test_table_rows_match_the_csv(self):
+        import re
+
+        text = read("benchmarks/README.md")
+        data = {r["encoding"]: r for r in rows("scorecard_raw.csv") if r["payload"] == "trit"}
+        checked = 0
+        for line in text.splitlines():
+            cells = [c.replace("*", "").strip() for c in line.strip("|").split("|")]
+            if len(cells) < 5:
+                continue
+            name = cells[0]
+            name = {
+                "TQ1_0": "TQ1_0 (5 trit/byte)",
+                "TQ2_0": "TQ2_0 (2 bit/trit)",
+                "Dual6 dual-plane (trit-only)": "Dual6 dual-plane (trit-only frame)",
+                "Dual6 interleaved (13 bit)": "Dual6 interleaved (13 bit/5 sym)",
+            }.get(name, name)
+            if name not in data:
+                continue
+            with self.subTest(encoding=name):
+                self.assertAlmostEqual(float(cells[1]), float(data[name]["bits_per_element"]), places=2)
+                self.assertAlmostEqual(float(cells[2]), float(data[name]["decode_ns_net"]), delta=0.15)
+                self.assertEqual(int(cells[5]), int(data[name]["selective_bytes"]))
+            checked += 1
+        self.assertGreaterEqual(checked, 9, "summary table not parsed")
+
+    def test_ratio_claims(self):
+        data = {r["encoding"]: r for r in rows("scorecard_raw.csv") if r["payload"] == "trit"}
+        int8 = data["int8 dense"]
+        trit_only = data["Dual6 dual-plane (trit-only frame)"]
+        ratio = float(trit_only["decode_ns_net"]) / float(int8["decode_ns_net"])
+        self.assertGreater(ratio, 100, "the README quotes 592x")
+        text = read("benchmarks/README.md")
+        self.assertIn("592×", text)
+
+
 class MaskStructure(unittest.TestCase):
     def test_density_is_identical_across_structures(self):
         data = rows("mask_structure.csv")
@@ -189,7 +228,7 @@ class ReadmeQuotes(unittest.TestCase):
         if not os.path.exists(os.path.join(ROOT, "README.zh-CN.md")):
             self.skipTest("no Chinese README")
         zh = read("README.zh-CN.md")
-        for claim in ("1.60 bpw", "59.2 ns", "62.5%", "−25%", "64 KiB", "284"):
+        for claim in ("1.60 bpw", "59.2 ns", "62.5%", "−25%", "64 KiB", "293"):
             with self.subTest(claim=claim):
                 self.assertIn(claim, zh)
         self.assertIn("README.md", zh)          # language switcher back

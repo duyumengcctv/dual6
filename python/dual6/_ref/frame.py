@@ -141,7 +141,7 @@ def unpack_dual_plane_v1(data: bytes) -> Tuple[List[int], List[int]]:
         raise Dual6Error(ErrorCode.INVALID_LAYOUT, f"reserved field must be 0, got {reserved}")
 
     expected_payload_len = (width + 7) // 8 + (width + TRIT_PER_BYTE - 1) // TRIT_PER_BYTE
-    if expected_payload_len >= 0 and payload_len != expected_payload_len:
+    if payload_len != expected_payload_len:
         raise Dual6Error(
             ErrorCode.INVALID_LAYOUT,
             f"payload length {payload_len} != expected {expected_payload_len}",

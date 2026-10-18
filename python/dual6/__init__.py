@@ -98,21 +98,67 @@ def _normalize_native_result(name: str, result: Any) -> Any:
 
 
 _NATIVE_WIDTH_LIMIT = 48
+_NATIVE_U32_LIMIT = 2 ** 32 - 1
+
+
+def _over(value: Any, limit: int) -> bool:
+    """``value > limit`` for integer values, without raising on odd types."""
+    return isinstance(value, int) and value > limit
 
 
 def _native_needs_ref_fallback(name: str, args: tuple[Any, ...], kwargs: dict[str, Any]) -> bool:
-    """Return True when the native helper's 48-symbol limit should fall back."""
+    """Return True when the native helper cannot represent the arguments.
+
+    The Rust helpers use ``u128``/``u32``/``usize``; widths above 48 symbols or
+    word sizes above ``u32`` must go through the pure-Python implementation.
+    """
     if name == "pack_digits":
         digits = kwargs.get("digits", args[0] if args else ())
         return len(digits) > _NATIVE_WIDTH_LIMIT
     if name == "unpack_digits":
-        if "width" in kwargs:
-            return kwargs["width"] > _NATIVE_WIDTH_LIMIT
-        return len(args) > 1 and args[1] > _NATIVE_WIDTH_LIMIT
-    if name in ("max_interleaved", "fits_unsigned_word"):
+        width = kwargs.get("width", args[1] if len(args) > 1 else 0)
+        return _over(width, _NATIVE_WIDTH_LIMIT)
+    if name == "max_interleaved":
         width = kwargs.get("width", args[0] if args else 0)
-        return width > _NATIVE_WIDTH_LIMIT
+        return _over(width, _NATIVE_WIDTH_LIMIT)
+    if name == "fits_unsigned_word":
+        width = kwargs.get("width", args[0] if args else 0)
+        word_bits = kwargs.get("word_bits", args[1] if len(args) > 1 else 0)
+        return _over(width, _NATIVE_WIDTH_LIMIT) or _over(word_bits, _NATIVE_U32_LIMIT)
     return False
+
+
+def _ref_callable(name: str) -> Callable[..., Any] | None:
+    """Resolve the pure-Python implementation of ``name`` (core or adapter)."""
+    ref_fn = getattr(_ref, name, None)
+    if ref_fn is not None:
+        return ref_fn
+    try:
+        from . import adapters as _adapters
+    except Exception:  # pragma: no cover - import-cycle safety
+        return None
+    return getattr(_adapters, name, None)
+
+
+def _error_from_ref(name: str, args: tuple[Any, ...], kwargs: dict[str, Any]) -> Dual6Error | None:
+    """Ask the reference backend what a marshalling failure should raise.
+
+    PyO3 raises ``OverflowError``/``TypeError`` while converting Python
+    arguments (for example ``mux([300], [0])`` or ``mux([1.0], [0])``) before
+    the Rust function ever runs.  Replaying the call on the reference
+    implementation turns that into the same ``Dual6Error`` code the pure-Python
+    backend would have raised, so the two backends stay API-identical.
+    """
+    ref_fn = _ref_callable(name)
+    if ref_fn is None:
+        return None
+    try:
+        ref_fn(*args, **kwargs)
+    except Dual6Error as exc:
+        return exc
+    except BaseException:
+        return None
+    return None
 
 
 def _wrap_native(name: str, fn: Callable[..., Any]) -> Callable[..., Any]:
@@ -127,6 +173,9 @@ def _wrap_native(name: str, fn: Callable[..., Any]) -> Callable[..., Any]:
         except Dual6Error:
             raise
         except OverflowError as exc:
+            ref_exc = _error_from_ref(name, args, kwargs)
+            if ref_exc is not None:
+                raise ref_exc from exc
             code_name = {
                 "encode_digit": "INVALID_BIT",
                 "decode_digit": "INVALID_DIGIT",
@@ -138,6 +187,13 @@ def _wrap_native(name: str, fn: Callable[..., Any]) -> Callable[..., Any]:
                 "pack_trits_bytes": "INVALID_TRIT",
             }.get(name, "INVALID_LAYOUT")
             raise Dual6Error(ErrorCode[code_name], str(exc)) from exc
+        except TypeError as exc:
+            ref_exc = _error_from_ref(name, args, kwargs)
+            if ref_exc is not None:
+                raise ref_exc from exc
+            # The reference backend would raise the same TypeError for this
+            # call, so do not mask it behind a Dual6Error.
+            raise
         except ValueError as exc:
             text = str(exc)
             prefix = text.split(":", 1)[0].strip()
