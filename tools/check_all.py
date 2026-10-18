@@ -33,7 +33,7 @@ def _run(label: str, cmd: List[str], env: Optional[dict[str, str]] = None) -> bo
     print(f"\n== {label} ==")
     printable = " ".join(cmd)
     print(f"+ {printable}")
-    result = subprocess.run(cmd, cwd=ROOT, env=env)
+    result = subprocess.run(cmd, cwd=ROOT, env=env, check=False)
     if result.returncode != 0:
         print(f"FAILED: {label} (exit code {result.returncode})")
         return False
@@ -51,6 +51,7 @@ def _backend() -> str:
         env=env,
         capture_output=True,
         text=True,
+        check=False,
     )
     return result.stdout.strip() if result.returncode == 0 else "unknown"
 
@@ -68,6 +69,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     checks = [
         ("version strings", [sys.executable, "tools/check_version.py"]),
         ("native API coverage", [sys.executable, "tools/native_coverage.py"]),
+        ("derived scorecard data", [sys.executable, "tools/make_scores.py", "--check"]),
     ]
 
     if args.skip_rust:

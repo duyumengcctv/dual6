@@ -52,15 +52,22 @@ SDIST_REQUIRED = (
     "dual6_cli.py",
     "run_tests.py",
     "docs/00-scope.md",
+    "docs/09-release.md",
     "docs/13-use-cases.md",
     "docs/dual6-format.svg",
     "benchmarks/README.md",
     "benchmarks/fault_size.csv",
+    "benchmarks/scenario_weights.csv",
+    "benchmarks/scenario_scores.csv",
+    "benchmarks/bandwidth_sweep.csv",
     "benchmarks/charts/scorecard.png",
+    "benchmarks/charts/scenario-scores.png",
+    "benchmarks/charts/bandwidth-crossover.png",
     "tests/test_frame.py",
     "tests/vectors/golden_vectors.json",
     "tools/check_all.py",
     "tools/coverage.py",
+    "tools/make_scores.py",
     "tools/verify_package.py",
     "python/dual6/__init__.py",
     "crates/dual6-core/src/frame.rs",
@@ -77,7 +84,7 @@ def _run(cmd: List[str], cwd: str = ROOT) -> None:
 def build_artifacts(outdir: str) -> tuple[str, str]:
     os.makedirs(outdir, exist_ok=True)
     try:
-        import build  # noqa: F401
+        import build
     except ImportError:
         build = None
     if build is not None:
@@ -118,7 +125,7 @@ def verify_sdist(path: str) -> None:
     with tarfile.open(path) as tf:
         names = [m.name for m in tf.getmembers() if m.isfile()]
     roots = {n.split("/", 1)[0] for n in names}
-    root = sorted(roots)[0] + "/"
+    root = min(roots) + "/"
     rel = {_inside(n, root) for n in names}
     bad = [n for n in names if n.endswith(BAD_SUFFIXES) or "__pycache__" in n]
     if bad:

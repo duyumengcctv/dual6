@@ -1,0 +1,106 @@
+payload,encoding,bandwidth_gbps,bits_per_element,bytes_per_element,decode_compute_ns,memory_ns,effective_ns,dominant,rank
+trit,Dual6 dual-plane,1,2.600098,0.325012,0.448,0.325012,0.448,compute,1
+trit,Dual6 dual-plane (trit-only frame),1,1.600098,0.200012,0.448,0.200012,0.448,compute,1
+trit,two separate arrays,1,1.600098,0.200012,0.448,0.200012,0.448,compute,1
+trit,TQ1_0 (5 trit/byte),1,1.600098,0.200012,0.45,0.200012,0.45,compute,4
+trit,TQ2_0 (2 bit/trit),1,2,0.25,0.562,0.25,0.562,compute,5
+trit,int8 dense,1,8,1,0.035,1,1,memory,6
+trit,6-state 3-bit slot,1,3,0.375,1.015,0.375,1.015,compute,7
+trit,Dual6 interleaved (13 bit/5 sym),1,2.60022,0.325027,1.648,0.325027,1.648,compute,8
+trit,fp16 dense,1,16,2,0.035,2,2,memory,9
+trit,int8 dense,3,8,1,0.035,0.333333,0.333333,memory,1
+trit,Dual6 dual-plane,3,2.600098,0.325012,0.448,0.108337,0.448,compute,2
+trit,Dual6 dual-plane (trit-only frame),3,1.600098,0.200012,0.448,0.066671,0.448,compute,2
+trit,two separate arrays,3,1.600098,0.200012,0.448,0.066671,0.448,compute,2
+trit,TQ1_0 (5 trit/byte),3,1.600098,0.200012,0.45,0.066671,0.45,compute,5
+trit,TQ2_0 (2 bit/trit),3,2,0.25,0.562,0.083333,0.562,compute,6
+trit,fp16 dense,3,16,2,0.035,0.666667,0.666667,memory,7
+trit,6-state 3-bit slot,3,3,0.375,1.015,0.125,1.015,compute,8
+trit,Dual6 interleaved (13 bit/5 sym),3,2.60022,0.325027,1.648,0.108342,1.648,compute,9
+trit,int8 dense,10,8,1,0.035,0.1,0.1,memory,1
+trit,fp16 dense,10,16,2,0.035,0.2,0.2,memory,2
+trit,Dual6 dual-plane,10,2.600098,0.325012,0.448,0.032501,0.448,compute,3
+trit,Dual6 dual-plane (trit-only frame),10,1.600098,0.200012,0.448,0.020001,0.448,compute,3
+trit,two separate arrays,10,1.600098,0.200012,0.448,0.020001,0.448,compute,3
+trit,TQ1_0 (5 trit/byte),10,1.600098,0.200012,0.45,0.020001,0.45,compute,6
+trit,TQ2_0 (2 bit/trit),10,2,0.25,0.562,0.025,0.562,compute,7
+trit,6-state 3-bit slot,10,3,0.375,1.015,0.0375,1.015,compute,8
+trit,Dual6 interleaved (13 bit/5 sym),10,2.60022,0.325027,1.648,0.032503,1.648,compute,9
+trit,int8 dense,30,8,1,0.035,0.033333,0.035,compute,1
+trit,fp16 dense,30,16,2,0.035,0.066667,0.066667,memory,2
+trit,Dual6 dual-plane,30,2.600098,0.325012,0.448,0.010834,0.448,compute,3
+trit,Dual6 dual-plane (trit-only frame),30,1.600098,0.200012,0.448,0.006667,0.448,compute,3
+trit,two separate arrays,30,1.600098,0.200012,0.448,0.006667,0.448,compute,3
+trit,TQ1_0 (5 trit/byte),30,1.600098,0.200012,0.45,0.006667,0.45,compute,6
+trit,TQ2_0 (2 bit/trit),30,2,0.25,0.562,0.008333,0.562,compute,7
+trit,6-state 3-bit slot,30,3,0.375,1.015,0.0125,1.015,compute,8
+trit,Dual6 interleaved (13 bit/5 sym),30,2.60022,0.325027,1.648,0.010834,1.648,compute,9
+trit,fp16 dense,100,16,2,0.035,0.02,0.035,compute,1
+trit,int8 dense,100,8,1,0.035,0.01,0.035,compute,1
+trit,Dual6 dual-plane,100,2.600098,0.325012,0.448,0.00325,0.448,compute,3
+trit,Dual6 dual-plane (trit-only frame),100,1.600098,0.200012,0.448,0.002,0.448,compute,3
+trit,two separate arrays,100,1.600098,0.200012,0.448,0.002,0.448,compute,3
+trit,TQ1_0 (5 trit/byte),100,1.600098,0.200012,0.45,0.002,0.45,compute,6
+trit,TQ2_0 (2 bit/trit),100,2,0.25,0.562,0.0025,0.562,compute,7
+trit,6-state 3-bit slot,100,3,0.375,1.015,0.00375,1.015,compute,8
+trit,Dual6 interleaved (13 bit/5 sym),100,2.60022,0.325027,1.648,0.00325,1.648,compute,9
+trit,fp16 dense,300,16,2,0.035,0.006667,0.035,compute,1
+trit,int8 dense,300,8,1,0.035,0.003333,0.035,compute,1
+trit,Dual6 dual-plane,300,2.600098,0.325012,0.448,0.001083,0.448,compute,3
+trit,Dual6 dual-plane (trit-only frame),300,1.600098,0.200012,0.448,0.000667,0.448,compute,3
+trit,two separate arrays,300,1.600098,0.200012,0.448,0.000667,0.448,compute,3
+trit,TQ1_0 (5 trit/byte),300,1.600098,0.200012,0.45,0.000667,0.45,compute,6
+trit,TQ2_0 (2 bit/trit),300,2,0.25,0.562,0.000833,0.562,compute,7
+trit,6-state 3-bit slot,300,3,0.375,1.015,0.00125,1.015,compute,8
+trit,Dual6 interleaved (13 bit/5 sym),300,2.60022,0.325027,1.648,0.001083,1.648,compute,9
+trit,fp16 dense,1000,16,2,0.035,0.002,0.035,compute,1
+trit,int8 dense,1000,8,1,0.035,0.001,0.035,compute,1
+trit,Dual6 dual-plane,1000,2.600098,0.325012,0.448,0.000325,0.448,compute,3
+trit,Dual6 dual-plane (trit-only frame),1000,1.600098,0.200012,0.448,0.0002,0.448,compute,3
+trit,two separate arrays,1000,1.600098,0.200012,0.448,0.0002,0.448,compute,3
+trit,TQ1_0 (5 trit/byte),1000,1.600098,0.200012,0.45,0.0002,0.45,compute,6
+trit,TQ2_0 (2 bit/trit),1000,2,0.25,0.562,0.00025,0.562,compute,7
+trit,6-state 3-bit slot,1000,3,0.375,1.015,0.000375,1.015,compute,8
+trit,Dual6 interleaved (13 bit/5 sym),1000,2.60022,0.325027,1.648,0.000325,1.648,compute,9
+dual,Dual6 dual-plane,1,2.600098,0.325012,0.448,0.325012,0.448,compute,1
+dual,two separate arrays,1,2.600098,0.325012,0.448,0.325012,0.448,compute,1
+dual,6-state 3-bit slot,1,3,0.375,1.015,0.375,1.015,compute,3
+dual,Dual6 interleaved (13 bit/5 sym),1,2.60022,0.325027,1.648,0.325027,1.648,compute,4
+dual,int8 dense,1,16,2,0.035,2,2,memory,5
+dual,fp16 dense,1,32,4,0.035,4,4,memory,6
+dual,Dual6 dual-plane,3,2.600098,0.325012,0.448,0.108337,0.448,compute,1
+dual,two separate arrays,3,2.600098,0.325012,0.448,0.108337,0.448,compute,1
+dual,int8 dense,3,16,2,0.035,0.666667,0.666667,memory,3
+dual,6-state 3-bit slot,3,3,0.375,1.015,0.125,1.015,compute,4
+dual,fp16 dense,3,32,4,0.035,1.333333,1.333333,memory,5
+dual,Dual6 interleaved (13 bit/5 sym),3,2.60022,0.325027,1.648,0.108342,1.648,compute,6
+dual,int8 dense,10,16,2,0.035,0.2,0.2,memory,1
+dual,fp16 dense,10,32,4,0.035,0.4,0.4,memory,2
+dual,Dual6 dual-plane,10,2.600098,0.325012,0.448,0.032501,0.448,compute,3
+dual,two separate arrays,10,2.600098,0.325012,0.448,0.032501,0.448,compute,3
+dual,6-state 3-bit slot,10,3,0.375,1.015,0.0375,1.015,compute,5
+dual,Dual6 interleaved (13 bit/5 sym),10,2.60022,0.325027,1.648,0.032503,1.648,compute,6
+dual,int8 dense,30,16,2,0.035,0.066667,0.066667,memory,1
+dual,fp16 dense,30,32,4,0.035,0.133333,0.133333,memory,2
+dual,Dual6 dual-plane,30,2.600098,0.325012,0.448,0.010834,0.448,compute,3
+dual,two separate arrays,30,2.600098,0.325012,0.448,0.010834,0.448,compute,3
+dual,6-state 3-bit slot,30,3,0.375,1.015,0.0125,1.015,compute,5
+dual,Dual6 interleaved (13 bit/5 sym),30,2.60022,0.325027,1.648,0.010834,1.648,compute,6
+dual,int8 dense,100,16,2,0.035,0.02,0.035,compute,1
+dual,fp16 dense,100,32,4,0.035,0.04,0.04,memory,2
+dual,Dual6 dual-plane,100,2.600098,0.325012,0.448,0.00325,0.448,compute,3
+dual,two separate arrays,100,2.600098,0.325012,0.448,0.00325,0.448,compute,3
+dual,6-state 3-bit slot,100,3,0.375,1.015,0.00375,1.015,compute,5
+dual,Dual6 interleaved (13 bit/5 sym),100,2.60022,0.325027,1.648,0.00325,1.648,compute,6
+dual,fp16 dense,300,32,4,0.035,0.013333,0.035,compute,1
+dual,int8 dense,300,16,2,0.035,0.006667,0.035,compute,1
+dual,Dual6 dual-plane,300,2.600098,0.325012,0.448,0.001083,0.448,compute,3
+dual,two separate arrays,300,2.600098,0.325012,0.448,0.001083,0.448,compute,3
+dual,6-state 3-bit slot,300,3,0.375,1.015,0.00125,1.015,compute,5
+dual,Dual6 interleaved (13 bit/5 sym),300,2.60022,0.325027,1.648,0.001083,1.648,compute,6
+dual,fp16 dense,1000,32,4,0.035,0.004,0.035,compute,1
+dual,int8 dense,1000,16,2,0.035,0.002,0.035,compute,1
+dual,Dual6 dual-plane,1000,2.600098,0.325012,0.448,0.000325,0.448,compute,3
+dual,two separate arrays,1000,2.600098,0.325012,0.448,0.000325,0.448,compute,3
+dual,6-state 3-bit slot,1000,3,0.375,1.015,0.000375,1.015,compute,5
+dual,Dual6 interleaved (13 bit/5 sym),1000,2.60022,0.325027,1.648,0.000325,1.648,compute,6

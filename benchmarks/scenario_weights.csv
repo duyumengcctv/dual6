@@ -1,0 +1,6 @@
+scenario,payload,description,bits_per_element,encode_ns_per_element,decode_ns_net,random_ns_net,sparse_ns_net,selective_bytes,integrity,single_object,ops_per_element
+pure_ternary,trit,"Pure ternary inference: compact storage, one checksummed object, decode matters",30,5,20,5,5,5,15,10,5
+sparse_gather,both,"Sparse gather: 5% of elements are read per pass",20,5,10,15,30,5,5,5,5
+dual_channel,dual,"Per-element bit+trit payload: serving one channel cheaply matters most",20,5,15,5,10,25,10,5,5
+checkpoint_hot_swap,both,"Checkpoint / hot swap: random access plus integrity and atomic publish",10,10,10,20,5,5,20,15,5
+edge_small_model,both,"Edge / small model: storage and decode dominate the bill",40,10,15,5,5,5,10,5,5

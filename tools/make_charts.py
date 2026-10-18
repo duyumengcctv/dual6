@@ -10,7 +10,9 @@ in by hand. Requires matplotlib (not a runtime dependency of the package):
 from __future__ import annotations
 
 import csv
+import math
 import os
+import warnings
 
 import matplotlib
 
@@ -54,7 +56,15 @@ def rows(name):
 def save(fig, name):
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, name)
-    fig.savefig(path, bbox_inches="tight")
+    with warnings.catch_warnings():
+        # The colorbar + suptitle combination trips matplotlib's tight_layout
+        # compatibility warning; bbox_inches="tight" still produces the right
+        # crop, so keep the output clean without changing the layout engine.
+        warnings.filterwarnings(
+            "ignore",
+            message="This figure includes Axes that are not compatible with tight_layout",
+        )
+        fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
     print("wrote", os.path.relpath(path, ROOT))
 
@@ -153,11 +163,120 @@ def chart_fault_size():
     save(fig, "fault-size.png")
 
 
+
+ENCODING_COLORS = {
+    "fp16 dense": "#868E96",
+    "int8 dense": "#495057",
+    "TQ1_0 (5 trit/byte)": TQ,
+    "TQ2_0 (2 bit/trit)": "#748FFC",
+    "6-state 3-bit slot": "#B197FC",
+    "Dual6 dual-plane": PURPLE,
+    "Dual6 dual-plane (trit-only frame)": D6,
+    "Dual6 interleaved (13 bit/5 sym)": "#E8590C",
+    "two separate arrays": GREY,
+}
+
+ENCODING_SHORT = {
+    "fp16 dense": "fp16",
+    "int8 dense": "int8",
+    "TQ1_0 (5 trit/byte)": "TQ1_0",
+    "TQ2_0 (2 bit/trit)": "TQ2_0",
+    "6-state 3-bit slot": "6-state",
+    "Dual6 dual-plane": "Dual6 DP",
+    "Dual6 dual-plane (trit-only frame)": "Dual6 trit-only",
+    "Dual6 interleaved (13 bit/5 sym)": "Dual6 interleaved",
+    "two separate arrays": "two arrays",
+}
+
+
+def chart_scenario_scores():
+    """Heat map of the five explicit weight sets, one panel per payload."""
+    data = rows("scenario_scores.csv")
+    fig, axes = plt.subplots(
+        1, 2, figsize=(11.0, 3.4), gridspec_kw={"width_ratios": [9, 6]}, sharey=False
+    )
+    for ax, payload in zip(axes, ("trit", "dual")):
+        subset = [r for r in data if r["payload"] == payload]
+        scenarios = []
+        for r in subset:
+            if r["scenario"] not in scenarios:
+                scenarios.append(r["scenario"])
+        encodings = sorted(
+            {r["encoding"] for r in subset},
+            key=lambda e: -max(float(r["weighted_score"]) for r in subset if r["encoding"] == e),
+        )
+        matrix = []
+        for scenario in scenarios:
+            line = []
+            for encoding in encodings:
+                match = [
+                    r for r in subset
+                    if r["scenario"] == scenario and r["encoding"] == encoding
+                ]
+                line.append(float(match[0]["weighted_score"]) if match else float("nan"))
+            matrix.append(line)
+        im = ax.imshow(matrix, cmap="YlGnBu", vmin=0, vmax=100, aspect="auto")
+        ax.set_xticks(range(len(encodings)))
+        ax.set_xticklabels([ENCODING_SHORT.get(e, e) for e in encodings],
+                           rotation=35, ha="right", fontsize=7)
+        ax.set_yticks(range(len(scenarios)))
+        ax.set_yticklabels(scenarios, fontsize=7.5)
+        for i, line in enumerate(matrix):
+            for j, value in enumerate(line):
+                if math.isnan(value):
+                    continue
+                ax.text(j, i, f"{value:.0f}", ha="center", va="center", fontsize=6.5,
+                        color="white" if value > 55 else "#212529")
+        ax.set_title(f"scenario score, {payload} payload")
+        ax.grid(False)
+    cbar = fig.colorbar(im, ax=axes, fraction=0.02, pad=0.02)
+    cbar.set_label("weighted score (0-100)", fontsize=8)
+    fig.suptitle("Five weight sets: who wins depends on what you weigh", y=1.02, fontsize=10,
+                 fontweight="bold")
+    save(fig, "scenario-scores.png")
+
+
+def chart_bandwidth_crossover():
+    """effective_ns = max(compute, bytes/bandwidth), swept over seven links."""
+    data = rows("bandwidth_sweep.csv")
+    fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.6), sharey=True)
+    for ax, payload in zip(axes, ("trit", "dual")):
+        subset = [r for r in data if r["payload"] == payload]
+        for encoding in sorted({r["encoding"] for r in subset}):
+            pts = sorted(
+                (float(r["bandwidth_gbps"]), float(r["effective_ns"]))
+                for r in subset if r["encoding"] == encoding
+            )
+            ax.plot(
+                [p[0] for p in pts],
+                [p[1] for p in pts],
+                "o-",
+                ms=3.5,
+                lw=1.2,
+                color=ENCODING_COLORS.get(encoding, "#868E96"),
+                label=ENCODING_SHORT.get(encoding, encoding),
+            )
+        ax.set_xscale("log")
+        ax.set_yscale("log")
+        ax.set_xlabel("bandwidth (GB/s, log)")
+        ax.set_title(f"{payload} payload")
+        ax.axhline(0.035, color="#333", lw=0.8, ls=":")
+    axes[0].set_ylabel("effective ns / element (log)")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", ncol=9, frameon=False,
+               fontsize=6.2, bbox_to_anchor=(0.5, -0.08))
+    fig.suptitle("Physical cost model: storage dominates on slow links, compute on fast ones",
+                 y=1.02, fontsize=10, fontweight="bold")
+    save(fig, "bandwidth-crossover.png")
+
+
 def main():
     chart_scorecard()
     chart_sparse_plane()
     chart_mask_structure()
     chart_fault_size()
+    chart_scenario_scores()
+    chart_bandwidth_crossover()
 
 
 if __name__ == "__main__":

@@ -56,7 +56,7 @@ DUAL6_BACKEND=native  python run_tests.py    # 要求 native，缺失即报错
 ## 3. 发布门禁
 
 ```bash
-python tools/check_all.py             # 版本 + native 覆盖率 + cargo test/build + Python 测试
+python tools/check_all.py             # 版本 + native 覆盖率 + 派生数据 + cargo test/build + Python 测试
 python tools/check_all.py --skip-rust # 纯 Python 环境
 python tools/coverage.py --html       # 测试 + 覆盖率（htmlcov/）
 python tools/verify_package.py --build --install-test
@@ -69,6 +69,8 @@ python tools/verify_package.py --build --install-test
 | `tools/verify_package.py` | 构建 wheel + sdist，检查内容并在临时 venv 里安装冒烟 |
 | `tools/native_coverage.py` | 检查 Rust 导出、`_native.pyi` 与公开 API 是否一致 |
 | `tools/check_version.py` | 检查四处版本号一致 |
+| `tools/make_scores.py` | 重建 `scenario_scores.csv` / `bandwidth_sweep.csv`；`--check` 校验未过期 |
+| `tools/make_charts.py` | 从 CSV 重建 6 张图（需要 matplotlib） |
 
 ## 4. 发布产物
 
@@ -100,8 +102,9 @@ ls dist/
 ## 6. 发布 checklist
 
 1. 更新四处版本号；
-2. `python tools/check_all.py`（有 Rust 工具链时不要加 `--skip-rust`）；
-3. `python tools/coverage.py --html`；
-4. `python tools/verify_package.py --build --install-test`；
-5. 确认 `dist/` 里只有这一版的 wheel 和 sdist；
-6. 打 tag 并上传产物。
+2. `python tools/make_scores.py --check`（派生 CSV 未过期）；
+3. `python tools/check_all.py`（有 Rust 工具链时不要加 `--skip-rust`）；
+4. `python tools/coverage.py --html`；
+5. `python tools/verify_package.py --build --install-test`；
+6. 确认 `dist/` 里只有这一版的 wheel 和 sdist；
+7. 打 tag 并上传产物。
