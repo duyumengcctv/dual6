@@ -176,6 +176,15 @@ each with a note describing the method and the machine.
 | compacted bit plane, clustered masks | **−25% to −33%** at 5% density; **+1.5%** when the mask is periodic |
 | in-place same-size overwrite, naive loader | silent corruption starts between **64 KiB and 512 KiB**; 26.5% of reads at 8 MiB |
 
+The scorecard, three rows out of nine (full table in
+[`benchmarks/README.md`](benchmarks/README.md)):
+
+| Encoding | bpw | decode ns | CRC | one object |
+|---|---:|---:|:-:|:-:|
+| `int8` dense | 8.00 | **0.1** | — | ✓ |
+| `TQ1_0` | 1.60 | 59.3 | — | ✓ |
+| **Dual6, trit-only frame** | **1.60** | 59.2 | **✓** | ✓ |
+
 <p align="center">
   <img alt="nine encodings: storage against decode cost" src="benchmarks/charts/scorecard.png" width="620"><br>
   <sub>Every encoding in the battery. The star is the trit-only frame: the same bytes as

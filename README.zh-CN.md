@@ -167,6 +167,14 @@ let (bits, trits) = dual6_core::demux(&symbols)?;
 | 压缩 bit 平面（聚集掩码） | 5% 密度下 **−25% ~ −33%**；周期散射时 **+1.5%** |
 | 就地同尺寸覆盖 + 裸加载器 | 静默损坏在 **64 KiB 到 512 KiB** 之间开始出现；8 MiB 时 26.5% 的读 |
 
+综合评分表，九行里挑三行（完整表见 [`benchmarks/README.md`](benchmarks/README.md)）：
+
+| 编码 | bpw | 解码 ns | 自带校验 | 单对象 |
+|---|---:|---:|:-:|:-:|
+| `int8` 稠密 | 8.00 | **0.1** | — | ✓ |
+| `TQ1_0` | 1.60 | 59.3 | — | ✓ |
+| **Dual6 trit-only 帧** | **1.60** | 59.2 | **✓** | ✓ |
+
 <p align="center">
   <img alt="九种编码：存储 vs 解码成本" src="benchmarks/charts/scorecard.png" width="620"><br>
   <sub>测试台里的全部编码。星号是 trit-only 帧：与 TQ1_0 同一套字节，外加一次 CRC。
