@@ -1,0 +1,5 @@
+data_model,name,meaning,info_bits_per_element,dual6_storage_bits_per_element,utilization_pct,interconvertible,write_semantics,notes
+T,trit-only,one balanced trit per element; the bit channel does not exist,1.584963,1.6,99.060156,no,update one trit (local),pure ternary weights; trit-only frame
+I,independent-dual,two independent channels per element: one bit and one trit,2.584963,2.6,99.421635,no,update bit or trit independently (local),the only case where Dual6 is information-optimal
+X,exact-dual,two expansions of one integer N: base-2 and balanced-base-3,1,2.6,38.461538,yes,recompute the middle symbol block for N,redundant by design; pays for zero-conversion dual reads
+S,shadow-projection,"one trit plus a derived bit, e.g. b = (t != 0)",1.584963,2.6,60.960096,no,"update trit, recompute derived bit",the second channel carries no new information; not recommended

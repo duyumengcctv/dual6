@@ -44,6 +44,7 @@ Documentation = "https://github.com/duyumengcctv/dual6/tree/main/docs"
 
 [project.optional-dependencies]
 dev = ["coverage", "build", "tomli; python_version < '3.11'"]
+model = ["torch", "transformers", "modelscope"]
 
 [project.scripts]
 dual6 = "dual6.cli:main"

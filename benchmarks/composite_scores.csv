@@ -1,0 +1,16 @@
+payload,data_model,encoding,evidence,decode_backend,proxy_source,info_bits_per_element,storage_bits_per_element,utilization_pct,redundancy_ratio,score_bits_per_element,score_encode_ns_per_element,score_decode_ns_net,score_random_ns_net,score_sparse_ns_net,score_selective_bytes,score_integrity,score_single_object,score_ops_per_element,score_information_utilization,composite_score,rank
+trit,T,int8 dense,measured,python_net,,1.584963,8,19.812037,5.047436,0.200012,1,1,1,1,0.200012,0,1,1,0.19812,65.981448,1
+trit,T,Dual6 dual-plane (trit-only frame),measured,python_net,,1.584963,1.600098,99.05412,1.009549,1,0.221177,0.00169,0.230613,0.183835,1,1,1,0.25,0.990541,58.778569,2
+trit,T,TQ1_0 (5 trit/byte),measured,python_net,,1.584963,1.600098,99.05412,1.009549,1,0.413213,0.001686,0.235457,0.181031,1,0,1,0.5,0.990541,53.219276,3
+trit,T,Dual6 dual-plane,measured,python_net,,1.584963,2.600098,60.957818,1.640479,0.615399,0.22099,0.000839,0.100733,0.082624,1,1,1,0.25,0.609578,48.801639,4
+trit,T,TQ2_0 (2 bit/trit),measured,python_net,,1.584963,2,79.24815,1.261859,0.800049,0.399474,0.00206,0.341483,0.243962,0.800049,0,1,0.5,0.792481,48.795581,5
+trit,T,two separate arrays,measured,python_net,,1.584963,1.600098,99.05412,1.009549,1,0.406433,0.001251,0.177315,0.142543,1,0,0,1,0.990541,47.180831,6
+trit,T,Dual6 interleaved (13 bit/5 sym),measured,python_net,,1.584963,2.60022,60.954958,1.640556,0.61537,0.227165,0.00088,0.061984,0.044035,0.61537,1,1,0.2,0.60955,43.743531,7
+trit,T,6-state 3-bit slot,measured,python_net,,1.584963,3,52.8321,1.892789,0.533366,0.13166,0.000434,0.186719,0.136168,0.533366,0,1,0.333333,0.528321,33.833672,8
+trit,T,fp16 dense,measured,python_net,,1.584963,16,9.906019,10.094873,0.100006,0.854336,0.004179,0.297954,0.234189,0.100006,0,0,0.5,0.09906,21.897303,9
+dual,I,int8 dense,measured,python_net,,2.584963,16,16.156019,6.189644,0.162506,1,1,1,1,0.100006,0,1,1,0.16156,64.240724,1
+dual,I,Dual6 dual-plane,measured,python_net,,2.584963,2.600098,99.417907,1.005855,1,0.341624,0.087813,0.115397,0.071954,1,1,1,0.25,0.994179,58.609678,2
+dual,I,Dual6 interleaved (13 bit/5 sym),measured,python_net,,2.584963,2.60022,99.413242,1.005902,0.999953,0.332433,0.097837,0.081063,0.040229,0.61537,1,1,0.2,0.994132,53.610169,3
+dual,I,two separate arrays,measured,python_net,,2.584963,2.600098,99.417907,1.005855,1,0.336999,0.08134,0.10928,0.067323,1,0,0,1,0.994179,45.891209,4
+dual,I,6-state 3-bit slot,measured,python_net,,2.584963,3,86.165433,1.160558,0.866699,0.19901,0.047613,0.255,0.126907,0.533366,0,1,0.333333,0.861654,42.235829,5
+dual,I,fp16 dense,measured,python_net,,2.584963,32,8.078009,12.379287,0.081253,0.70574,0.197671,0.373041,0.209726,0.050003,0,0,0.5,0.08078,21.982145,6

@@ -1,0 +1,757 @@
+analysis,payload,parameter,encoding,score
+structural,trit,0,fp16 dense,29.866716
+structural,trit,0,int8 dense,77.143206
+structural,trit,0,TQ1_0 (5 trit/byte),47.591234
+structural,trit,0,TQ2_0 (2 bit/trit),44.101094
+structural,trit,0,6-state 3-bit slot,26.50066
+structural,trit,0,Dual6 dual-plane,32.43694
+structural,trit,0,Dual6 dual-plane (trit-only frame),41.247367
+structural,trit,0,Dual6 interleaved (13 bit/5 sym),25.211479
+structural,trit,0,two separate arrays,53.250599
+structural,trit,5,fp16 dense,28.37338
+structural,trit,5,int8 dense,75.786046
+structural,trit,5,TQ1_0 (5 trit/byte),47.711672
+structural,trit,5,TQ2_0 (2 bit/trit),44.396039
+structural,trit,5,6-state 3-bit slot,27.675627
+structural,trit,5,Dual6 dual-plane,35.815093
+structural,trit,5,Dual6 dual-plane (trit-only frame),44.184999
+structural,trit,5,Dual6 interleaved (13 bit/5 sym),28.950905
+structural,trit,5,two separate arrays,50.588069
+structural,trit,10,fp16 dense,26.880044
+structural,trit,10,int8 dense,74.428885
+structural,trit,10,TQ1_0 (5 trit/byte),47.83211
+structural,trit,10,TQ2_0 (2 bit/trit),44.690985
+structural,trit,10,6-state 3-bit slot,28.850594
+structural,trit,10,Dual6 dual-plane,39.193246
+structural,trit,10,Dual6 dual-plane (trit-only frame),47.12263
+structural,trit,10,Dual6 interleaved (13 bit/5 sym),32.690331
+structural,trit,10,two separate arrays,47.925539
+structural,trit,15,fp16 dense,25.386709
+structural,trit,15,int8 dense,73.071725
+structural,trit,15,TQ1_0 (5 trit/byte),47.952549
+structural,trit,15,TQ2_0 (2 bit/trit),44.98593
+structural,trit,15,6-state 3-bit slot,30.025561
+structural,trit,15,Dual6 dual-plane,42.571399
+structural,trit,15,Dual6 dual-plane (trit-only frame),50.060262
+structural,trit,15,Dual6 interleaved (13 bit/5 sym),36.429757
+structural,trit,15,two separate arrays,45.263009
+structural,trit,20,fp16 dense,23.893373
+structural,trit,20,int8 dense,71.714565
+structural,trit,20,TQ1_0 (5 trit/byte),48.072987
+structural,trit,20,TQ2_0 (2 bit/trit),45.280875
+structural,trit,20,6-state 3-bit slot,31.200528
+structural,trit,20,Dual6 dual-plane,45.949552
+structural,trit,20,Dual6 dual-plane (trit-only frame),52.997894
+structural,trit,20,Dual6 interleaved (13 bit/5 sym),40.169183
+structural,trit,20,two separate arrays,42.600479
+structural,trit,25,fp16 dense,22.400037
+structural,trit,25,int8 dense,70.357404
+structural,trit,25,TQ1_0 (5 trit/byte),48.193425
+structural,trit,25,TQ2_0 (2 bit/trit),45.575821
+structural,trit,25,6-state 3-bit slot,32.375495
+structural,trit,25,Dual6 dual-plane,49.327705
+structural,trit,25,Dual6 dual-plane (trit-only frame),55.935525
+structural,trit,25,Dual6 interleaved (13 bit/5 sym),43.908609
+structural,trit,25,two separate arrays,39.937949
+structural,trit,30,fp16 dense,20.906701
+structural,trit,30,int8 dense,69.000244
+structural,trit,30,TQ1_0 (5 trit/byte),48.313864
+structural,trit,30,TQ2_0 (2 bit/trit),45.870766
+structural,trit,30,6-state 3-bit slot,33.550462
+structural,trit,30,Dual6 dual-plane,52.705858
+structural,trit,30,Dual6 dual-plane (trit-only frame),58.873157
+structural,trit,30,Dual6 interleaved (13 bit/5 sym),47.648035
+structural,trit,30,two separate arrays,37.275419
+structural,trit,35,fp16 dense,19.413365
+structural,trit,35,int8 dense,67.643084
+structural,trit,35,TQ1_0 (5 trit/byte),48.434302
+structural,trit,35,TQ2_0 (2 bit/trit),46.165711
+structural,trit,35,6-state 3-bit slot,34.725429
+structural,trit,35,Dual6 dual-plane,56.084011
+structural,trit,35,Dual6 dual-plane (trit-only frame),61.810788
+structural,trit,35,Dual6 interleaved (13 bit/5 sym),51.387461
+structural,trit,35,two separate arrays,34.612889
+structural,trit,40,fp16 dense,17.92003
+structural,trit,40,int8 dense,66.285924
+structural,trit,40,TQ1_0 (5 trit/byte),48.55474
+structural,trit,40,TQ2_0 (2 bit/trit),46.460656
+structural,trit,40,6-state 3-bit slot,35.900396
+structural,trit,40,Dual6 dual-plane,59.462164
+structural,trit,40,Dual6 dual-plane (trit-only frame),64.74842
+structural,trit,40,Dual6 interleaved (13 bit/5 sym),55.126887
+structural,trit,40,two separate arrays,31.950359
+structural,trit,45,fp16 dense,16.426694
+structural,trit,45,int8 dense,64.928763
+structural,trit,45,TQ1_0 (5 trit/byte),48.675179
+structural,trit,45,TQ2_0 (2 bit/trit),46.755602
+structural,trit,45,6-state 3-bit slot,37.075363
+structural,trit,45,Dual6 dual-plane,62.840317
+structural,trit,45,Dual6 dual-plane (trit-only frame),67.686052
+structural,trit,45,Dual6 interleaved (13 bit/5 sym),58.866313
+structural,trit,45,two separate arrays,29.287829
+structural,trit,50,fp16 dense,14.933358
+structural,trit,50,int8 dense,63.571603
+structural,trit,50,TQ1_0 (5 trit/byte),48.795617
+structural,trit,50,TQ2_0 (2 bit/trit),47.050547
+structural,trit,50,6-state 3-bit slot,38.25033
+structural,trit,50,Dual6 dual-plane,66.21847
+structural,trit,50,Dual6 dual-plane (trit-only frame),70.623683
+structural,trit,50,Dual6 interleaved (13 bit/5 sym),62.605739
+structural,trit,50,two separate arrays,26.625299
+structural,trit,55,fp16 dense,13.440022
+structural,trit,55,int8 dense,62.214443
+structural,trit,55,TQ1_0 (5 trit/byte),48.916055
+structural,trit,55,TQ2_0 (2 bit/trit),47.345492
+structural,trit,55,6-state 3-bit slot,39.425297
+structural,trit,55,Dual6 dual-plane,69.596623
+structural,trit,55,Dual6 dual-plane (trit-only frame),73.561315
+structural,trit,55,Dual6 interleaved (13 bit/5 sym),66.345166
+structural,trit,55,two separate arrays,23.962769
+structural,trit,60,fp16 dense,11.946686
+structural,trit,60,int8 dense,60.857282
+structural,trit,60,TQ1_0 (5 trit/byte),49.036493
+structural,trit,60,TQ2_0 (2 bit/trit),47.640438
+structural,trit,60,6-state 3-bit slot,40.600264
+structural,trit,60,Dual6 dual-plane,72.974776
+structural,trit,60,Dual6 dual-plane (trit-only frame),76.498947
+structural,trit,60,Dual6 interleaved (13 bit/5 sym),70.084592
+structural,trit,60,two separate arrays,21.300239
+structural,trit,65,fp16 dense,10.453351
+structural,trit,65,int8 dense,59.500122
+structural,trit,65,TQ1_0 (5 trit/byte),49.156932
+structural,trit,65,TQ2_0 (2 bit/trit),47.935383
+structural,trit,65,6-state 3-bit slot,41.775231
+structural,trit,65,Dual6 dual-plane,76.352929
+structural,trit,65,Dual6 dual-plane (trit-only frame),79.436578
+structural,trit,65,Dual6 interleaved (13 bit/5 sym),73.824018
+structural,trit,65,two separate arrays,18.63771
+structural,trit,70,fp16 dense,8.960015
+structural,trit,70,int8 dense,58.142962
+structural,trit,70,TQ1_0 (5 trit/byte),49.27737
+structural,trit,70,TQ2_0 (2 bit/trit),48.230328
+structural,trit,70,6-state 3-bit slot,42.950198
+structural,trit,70,Dual6 dual-plane,79.731082
+structural,trit,70,Dual6 dual-plane (trit-only frame),82.37421
+structural,trit,70,Dual6 interleaved (13 bit/5 sym),77.563444
+structural,trit,70,two separate arrays,15.97518
+structural,trit,75,fp16 dense,7.466679
+structural,trit,75,int8 dense,56.785801
+structural,trit,75,TQ1_0 (5 trit/byte),49.397808
+structural,trit,75,TQ2_0 (2 bit/trit),48.525274
+structural,trit,75,6-state 3-bit slot,44.125165
+structural,trit,75,Dual6 dual-plane,83.109235
+structural,trit,75,Dual6 dual-plane (trit-only frame),85.311842
+structural,trit,75,Dual6 interleaved (13 bit/5 sym),81.30287
+structural,trit,75,two separate arrays,13.31265
+structural,trit,80,fp16 dense,5.973343
+structural,trit,80,int8 dense,55.428641
+structural,trit,80,TQ1_0 (5 trit/byte),49.518247
+structural,trit,80,TQ2_0 (2 bit/trit),48.820219
+structural,trit,80,6-state 3-bit slot,45.300132
+structural,trit,80,Dual6 dual-plane,86.487388
+structural,trit,80,Dual6 dual-plane (trit-only frame),88.249473
+structural,trit,80,Dual6 interleaved (13 bit/5 sym),85.042296
+structural,trit,80,two separate arrays,10.65012
+structural,trit,85,fp16 dense,4.480007
+structural,trit,85,int8 dense,54.071481
+structural,trit,85,TQ1_0 (5 trit/byte),49.638685
+structural,trit,85,TQ2_0 (2 bit/trit),49.115164
+structural,trit,85,6-state 3-bit slot,46.475099
+structural,trit,85,Dual6 dual-plane,89.865541
+structural,trit,85,Dual6 dual-plane (trit-only frame),91.187105
+structural,trit,85,Dual6 interleaved (13 bit/5 sym),88.781722
+structural,trit,85,two separate arrays,7.98759
+structural,trit,90,fp16 dense,2.986672
+structural,trit,90,int8 dense,52.714321
+structural,trit,90,TQ1_0 (5 trit/byte),49.759123
+structural,trit,90,TQ2_0 (2 bit/trit),49.410109
+structural,trit,90,6-state 3-bit slot,47.650066
+structural,trit,90,Dual6 dual-plane,93.243694
+structural,trit,90,Dual6 dual-plane (trit-only frame),94.124737
+structural,trit,90,Dual6 interleaved (13 bit/5 sym),92.521148
+structural,trit,90,two separate arrays,5.32506
+structural,trit,95,fp16 dense,1.493336
+structural,trit,95,int8 dense,51.35716
+structural,trit,95,TQ1_0 (5 trit/byte),49.879562
+structural,trit,95,TQ2_0 (2 bit/trit),49.705055
+structural,trit,95,6-state 3-bit slot,48.825033
+structural,trit,95,Dual6 dual-plane,96.621847
+structural,trit,95,Dual6 dual-plane (trit-only frame),97.062368
+structural,trit,95,Dual6 interleaved (13 bit/5 sym),96.260574
+structural,trit,95,two separate arrays,2.66253
+structural,trit,100,fp16 dense,0
+structural,trit,100,int8 dense,50
+structural,trit,100,TQ1_0 (5 trit/byte),50
+structural,trit,100,TQ2_0 (2 bit/trit),50
+structural,trit,100,6-state 3-bit slot,50
+structural,trit,100,Dual6 dual-plane,100
+structural,trit,100,Dual6 dual-plane (trit-only frame),100
+structural,trit,100,Dual6 interleaved (13 bit/5 sym),100
+structural,trit,100,two separate arrays,0
+storage,trit,0,fp16 dense,24.8833
+storage,trit,0,int8 dense,77.500153
+storage,trit,0,TQ1_0 (5 trit/byte),41.642329
+storage,trit,0,TQ2_0 (2 bit/trit),41.087847
+storage,trit,0,6-state 3-bit slot,29.021004
+storage,trit,0,Dual6 dual-plane,45.689834
+storage,trit,0,Dual6 dual-plane (trit-only frame),48.591446
+storage,trit,0,Dual6 interleaved (13 bit/5 sym),39.367917
+storage,trit,0,two separate arrays,34.094274
+storage,trit,5,fp16 dense,24.139166
+storage,trit,5,int8 dense,74.625206
+storage,trit,5,TQ1_0 (5 trit/byte),44.560213
+storage,trit,5,TQ2_0 (2 bit/trit),43.033699
+storage,trit,5,6-state 3-bit slot,30.236783
+storage,trit,5,Dual6 dual-plane,46.482337
+storage,trit,5,Dual6 dual-plane (trit-only frame),51.161874
+storage,trit,5,Dual6 interleaved (13 bit/5 sym),40.476372
+storage,trit,5,two separate arrays,37.38956
+storage,trit,10,fp16 dense,23.395031
+storage,trit,10,int8 dense,71.750259
+storage,trit,10,TQ1_0 (5 trit/byte),47.478097
+storage,trit,10,TQ2_0 (2 bit/trit),44.979551
+storage,trit,10,6-state 3-bit slot,31.452562
+storage,trit,10,Dual6 dual-plane,47.274841
+storage,trit,10,Dual6 dual-plane (trit-only frame),53.732301
+storage,trit,10,Dual6 interleaved (13 bit/5 sym),41.584827
+storage,trit,10,two separate arrays,40.684846
+storage,trit,15,fp16 dense,22.650897
+storage,trit,15,int8 dense,68.875313
+storage,trit,15,TQ1_0 (5 trit/byte),50.39598
+storage,trit,15,TQ2_0 (2 bit/trit),46.925402
+storage,trit,15,6-state 3-bit slot,32.668341
+storage,trit,15,Dual6 dual-plane,48.067345
+storage,trit,15,Dual6 dual-plane (trit-only frame),56.302729
+storage,trit,15,Dual6 interleaved (13 bit/5 sym),42.693282
+storage,trit,15,two separate arrays,43.980133
+storage,trit,20,fp16 dense,21.906762
+storage,trit,20,int8 dense,66.000366
+storage,trit,20,TQ1_0 (5 trit/byte),53.313864
+storage,trit,20,TQ2_0 (2 bit/trit),48.871254
+storage,trit,20,6-state 3-bit slot,33.884121
+storage,trit,20,Dual6 dual-plane,48.859848
+storage,trit,20,Dual6 dual-plane (trit-only frame),58.873157
+storage,trit,20,Dual6 interleaved (13 bit/5 sym),43.801737
+storage,trit,20,two separate arrays,47.275419
+storage,trit,25,fp16 dense,21.162628
+storage,trit,25,int8 dense,63.12542
+storage,trit,25,TQ1_0 (5 trit/byte),56.231747
+storage,trit,25,TQ2_0 (2 bit/trit),50.817106
+storage,trit,25,6-state 3-bit slot,35.0999
+storage,trit,25,Dual6 dual-plane,49.652352
+storage,trit,25,Dual6 dual-plane (trit-only frame),61.443585
+storage,trit,25,Dual6 interleaved (13 bit/5 sym),44.910192
+storage,trit,25,two separate arrays,50.570705
+storage,trit,30,fp16 dense,20.418493
+storage,trit,30,int8 dense,60.250473
+storage,trit,30,TQ1_0 (5 trit/byte),59.149631
+storage,trit,30,TQ2_0 (2 bit/trit),52.762958
+storage,trit,30,6-state 3-bit slot,36.315679
+storage,trit,30,Dual6 dual-plane,50.444856
+storage,trit,30,Dual6 dual-plane (trit-only frame),64.014012
+storage,trit,30,Dual6 interleaved (13 bit/5 sym),46.018647
+storage,trit,30,two separate arrays,53.865992
+storage,trit,35,fp16 dense,19.674359
+storage,trit,35,int8 dense,57.375526
+storage,trit,35,TQ1_0 (5 trit/byte),62.067514
+storage,trit,35,TQ2_0 (2 bit/trit),54.70881
+storage,trit,35,6-state 3-bit slot,37.531458
+storage,trit,35,Dual6 dual-plane,51.237359
+storage,trit,35,Dual6 dual-plane (trit-only frame),66.58444
+storage,trit,35,Dual6 interleaved (13 bit/5 sym),47.127102
+storage,trit,35,two separate arrays,57.161278
+storage,trit,40,fp16 dense,18.930224
+storage,trit,40,int8 dense,54.50058
+storage,trit,40,TQ1_0 (5 trit/byte),64.985398
+storage,trit,40,TQ2_0 (2 bit/trit),56.654661
+storage,trit,40,6-state 3-bit slot,38.747238
+storage,trit,40,Dual6 dual-plane,52.029863
+storage,trit,40,Dual6 dual-plane (trit-only frame),69.154868
+storage,trit,40,Dual6 interleaved (13 bit/5 sym),48.235557
+storage,trit,40,two separate arrays,60.456564
+storage,trit,45,fp16 dense,18.18609
+storage,trit,45,int8 dense,51.625633
+storage,trit,45,TQ1_0 (5 trit/byte),67.903281
+storage,trit,45,TQ2_0 (2 bit/trit),58.600513
+storage,trit,45,6-state 3-bit slot,39.963017
+storage,trit,45,Dual6 dual-plane,52.822366
+storage,trit,45,Dual6 dual-plane (trit-only frame),71.725295
+storage,trit,45,Dual6 interleaved (13 bit/5 sym),49.344012
+storage,trit,45,two separate arrays,63.751851
+storage,trit,50,fp16 dense,17.441955
+storage,trit,50,int8 dense,48.750687
+storage,trit,50,TQ1_0 (5 trit/byte),70.821165
+storage,trit,50,TQ2_0 (2 bit/trit),60.546365
+storage,trit,50,6-state 3-bit slot,41.178796
+storage,trit,50,Dual6 dual-plane,53.61487
+storage,trit,50,Dual6 dual-plane (trit-only frame),74.295723
+storage,trit,50,Dual6 interleaved (13 bit/5 sym),50.452467
+storage,trit,50,two separate arrays,67.047137
+storage,trit,55,fp16 dense,16.697821
+storage,trit,55,int8 dense,45.87574
+storage,trit,55,TQ1_0 (5 trit/byte),73.739048
+storage,trit,55,TQ2_0 (2 bit/trit),62.492217
+storage,trit,55,6-state 3-bit slot,42.394575
+storage,trit,55,Dual6 dual-plane,54.407374
+storage,trit,55,Dual6 dual-plane (trit-only frame),76.866151
+storage,trit,55,Dual6 interleaved (13 bit/5 sym),51.560922
+storage,trit,55,two separate arrays,70.342423
+storage,trit,60,fp16 dense,15.953686
+storage,trit,60,int8 dense,43.000793
+storage,trit,60,TQ1_0 (5 trit/byte),76.656932
+storage,trit,60,TQ2_0 (2 bit/trit),64.438069
+storage,trit,60,6-state 3-bit slot,43.610355
+storage,trit,60,Dual6 dual-plane,55.199877
+storage,trit,60,Dual6 dual-plane (trit-only frame),79.436578
+storage,trit,60,Dual6 interleaved (13 bit/5 sym),52.669377
+storage,trit,60,two separate arrays,73.63771
+storage,trit,65,fp16 dense,15.209552
+storage,trit,65,int8 dense,40.125847
+storage,trit,65,TQ1_0 (5 trit/byte),79.574815
+storage,trit,65,TQ2_0 (2 bit/trit),66.38392
+storage,trit,65,6-state 3-bit slot,44.826134
+storage,trit,65,Dual6 dual-plane,55.992381
+storage,trit,65,Dual6 dual-plane (trit-only frame),82.007006
+storage,trit,65,Dual6 interleaved (13 bit/5 sym),53.777832
+storage,trit,65,two separate arrays,76.932996
+storage,trit,70,fp16 dense,14.465417
+storage,trit,70,int8 dense,37.2509
+storage,trit,70,TQ1_0 (5 trit/byte),82.492699
+storage,trit,70,TQ2_0 (2 bit/trit),68.329772
+storage,trit,70,6-state 3-bit slot,46.041913
+storage,trit,70,Dual6 dual-plane,56.784884
+storage,trit,70,Dual6 dual-plane (trit-only frame),84.577434
+storage,trit,70,Dual6 interleaved (13 bit/5 sym),54.886287
+storage,trit,70,two separate arrays,80.228282
+storage,trit,75,fp16 dense,13.721283
+storage,trit,75,int8 dense,34.375954
+storage,trit,75,TQ1_0 (5 trit/byte),85.410582
+storage,trit,75,TQ2_0 (2 bit/trit),70.275624
+storage,trit,75,6-state 3-bit slot,47.257692
+storage,trit,75,Dual6 dual-plane,57.577388
+storage,trit,75,Dual6 dual-plane (trit-only frame),87.147862
+storage,trit,75,Dual6 interleaved (13 bit/5 sym),55.994742
+storage,trit,75,two separate arrays,83.523568
+storage,trit,80,fp16 dense,12.977148
+storage,trit,80,int8 dense,31.501007
+storage,trit,80,TQ1_0 (5 trit/byte),88.328466
+storage,trit,80,TQ2_0 (2 bit/trit),72.221476
+storage,trit,80,6-state 3-bit slot,48.473472
+storage,trit,80,Dual6 dual-plane,58.369892
+storage,trit,80,Dual6 dual-plane (trit-only frame),89.718289
+storage,trit,80,Dual6 interleaved (13 bit/5 sym),57.103197
+storage,trit,80,two separate arrays,86.818855
+storage,trit,85,fp16 dense,12.233014
+storage,trit,85,int8 dense,28.62606
+storage,trit,85,TQ1_0 (5 trit/byte),91.246349
+storage,trit,85,TQ2_0 (2 bit/trit),74.167327
+storage,trit,85,6-state 3-bit slot,49.689251
+storage,trit,85,Dual6 dual-plane,59.162395
+storage,trit,85,Dual6 dual-plane (trit-only frame),92.288717
+storage,trit,85,Dual6 interleaved (13 bit/5 sym),58.211652
+storage,trit,85,two separate arrays,90.114141
+storage,trit,90,fp16 dense,11.488879
+storage,trit,90,int8 dense,25.751114
+storage,trit,90,TQ1_0 (5 trit/byte),94.164233
+storage,trit,90,TQ2_0 (2 bit/trit),76.113179
+storage,trit,90,6-state 3-bit slot,50.90503
+storage,trit,90,Dual6 dual-plane,59.954899
+storage,trit,90,Dual6 dual-plane (trit-only frame),94.859145
+storage,trit,90,Dual6 interleaved (13 bit/5 sym),59.320107
+storage,trit,90,two separate arrays,93.409427
+storage,trit,95,fp16 dense,10.744745
+storage,trit,95,int8 dense,22.876167
+storage,trit,95,TQ1_0 (5 trit/byte),97.082116
+storage,trit,95,TQ2_0 (2 bit/trit),78.059031
+storage,trit,95,6-state 3-bit slot,52.120809
+storage,trit,95,Dual6 dual-plane,60.747402
+storage,trit,95,Dual6 dual-plane (trit-only frame),97.429572
+storage,trit,95,Dual6 interleaved (13 bit/5 sym),60.428562
+storage,trit,95,two separate arrays,96.704714
+storage,trit,100,fp16 dense,10.00061
+storage,trit,100,int8 dense,20.001221
+storage,trit,100,TQ1_0 (5 trit/byte),100
+storage,trit,100,TQ2_0 (2 bit/trit),80.004883
+storage,trit,100,6-state 3-bit slot,53.336589
+storage,trit,100,Dual6 dual-plane,61.539906
+storage,trit,100,Dual6 dual-plane (trit-only frame),100
+storage,trit,100,Dual6 interleaved (13 bit/5 sym),61.537017
+storage,trit,100,two separate arrays,100
+structural,dual,0,fp16 dense,30.249063
+structural,dual,0,int8 dense,75.178746
+structural,dual,0,6-state 3-bit slot,33.741837
+structural,dual,0,Dual6 dual-plane,40.954125
+structural,dual,0,Dual6 interleaved (13 bit/5 sym),33.812636
+structural,dual,0,two separate arrays,51.356312
+structural,dual,5,fp16 dense,28.73661
+structural,dual,5,int8 dense,73.919809
+structural,dual,5,6-state 3-bit slot,34.554745
+structural,dual,5,Dual6 dual-plane,43.906419
+structural,dual,5,Dual6 interleaved (13 bit/5 sym),37.122004
+structural,dual,5,two separate arrays,48.788497
+structural,dual,10,fp16 dense,27.224157
+structural,dual,10,int8 dense,72.660871
+structural,dual,10,6-state 3-bit slot,35.367653
+structural,dual,10,Dual6 dual-plane,46.858713
+structural,dual,10,Dual6 interleaved (13 bit/5 sym),40.431373
+structural,dual,10,two separate arrays,46.220681
+structural,dual,15,fp16 dense,25.711703
+structural,dual,15,int8 dense,71.401934
+structural,dual,15,6-state 3-bit slot,36.180561
+structural,dual,15,Dual6 dual-plane,49.811007
+structural,dual,15,Dual6 interleaved (13 bit/5 sym),43.740741
+structural,dual,15,two separate arrays,43.652866
+structural,dual,20,fp16 dense,24.19925
+structural,dual,20,int8 dense,70.142997
+structural,dual,20,6-state 3-bit slot,36.993469
+structural,dual,20,Dual6 dual-plane,52.7633
+structural,dual,20,Dual6 interleaved (13 bit/5 sym),47.050109
+structural,dual,20,two separate arrays,41.08505
+structural,dual,25,fp16 dense,22.686797
+structural,dual,25,int8 dense,68.884059
+structural,dual,25,6-state 3-bit slot,37.806377
+structural,dual,25,Dual6 dual-plane,55.715594
+structural,dual,25,Dual6 interleaved (13 bit/5 sym),50.359477
+structural,dual,25,two separate arrays,38.517234
+structural,dual,30,fp16 dense,21.174344
+structural,dual,30,int8 dense,67.625122
+structural,dual,30,6-state 3-bit slot,38.619286
+structural,dual,30,Dual6 dual-plane,58.667888
+structural,dual,30,Dual6 interleaved (13 bit/5 sym),53.668845
+structural,dual,30,two separate arrays,35.949419
+structural,dual,35,fp16 dense,19.661891
+structural,dual,35,int8 dense,66.366185
+structural,dual,35,6-state 3-bit slot,39.432194
+structural,dual,35,Dual6 dual-plane,61.620182
+structural,dual,35,Dual6 interleaved (13 bit/5 sym),56.978213
+structural,dual,35,two separate arrays,33.381603
+structural,dual,40,fp16 dense,18.149438
+structural,dual,40,int8 dense,65.107247
+structural,dual,40,6-state 3-bit slot,40.245102
+structural,dual,40,Dual6 dual-plane,64.572475
+structural,dual,40,Dual6 interleaved (13 bit/5 sym),60.287582
+structural,dual,40,two separate arrays,30.813787
+structural,dual,45,fp16 dense,16.636985
+structural,dual,45,int8 dense,63.84831
+structural,dual,45,6-state 3-bit slot,41.05801
+structural,dual,45,Dual6 dual-plane,67.524769
+structural,dual,45,Dual6 interleaved (13 bit/5 sym),63.59695
+structural,dual,45,two separate arrays,28.245972
+structural,dual,50,fp16 dense,15.124531
+structural,dual,50,int8 dense,62.589373
+structural,dual,50,6-state 3-bit slot,41.870918
+structural,dual,50,Dual6 dual-plane,70.477063
+structural,dual,50,Dual6 interleaved (13 bit/5 sym),66.906318
+structural,dual,50,two separate arrays,25.678156
+structural,dual,55,fp16 dense,13.612078
+structural,dual,55,int8 dense,61.330436
+structural,dual,55,6-state 3-bit slot,42.683826
+structural,dual,55,Dual6 dual-plane,73.429356
+structural,dual,55,Dual6 interleaved (13 bit/5 sym),70.215686
+structural,dual,55,two separate arrays,23.110341
+structural,dual,60,fp16 dense,12.099625
+structural,dual,60,int8 dense,60.071498
+structural,dual,60,6-state 3-bit slot,43.496735
+structural,dual,60,Dual6 dual-plane,76.38165
+structural,dual,60,Dual6 interleaved (13 bit/5 sym),73.525054
+structural,dual,60,two separate arrays,20.542525
+structural,dual,65,fp16 dense,10.587172
+structural,dual,65,int8 dense,58.812561
+structural,dual,65,6-state 3-bit slot,44.309643
+structural,dual,65,Dual6 dual-plane,79.333944
+structural,dual,65,Dual6 interleaved (13 bit/5 sym),76.834423
+structural,dual,65,two separate arrays,17.974709
+structural,dual,70,fp16 dense,9.074719
+structural,dual,70,int8 dense,57.553624
+structural,dual,70,6-state 3-bit slot,45.122551
+structural,dual,70,Dual6 dual-plane,82.286238
+structural,dual,70,Dual6 interleaved (13 bit/5 sym),80.143791
+structural,dual,70,two separate arrays,15.406894
+structural,dual,75,fp16 dense,7.562266
+structural,dual,75,int8 dense,56.294686
+structural,dual,75,6-state 3-bit slot,45.935459
+structural,dual,75,Dual6 dual-plane,85.238531
+structural,dual,75,Dual6 interleaved (13 bit/5 sym),83.453159
+structural,dual,75,two separate arrays,12.839078
+structural,dual,80,fp16 dense,6.049813
+structural,dual,80,int8 dense,55.035749
+structural,dual,80,6-state 3-bit slot,46.748367
+structural,dual,80,Dual6 dual-plane,88.190825
+structural,dual,80,Dual6 interleaved (13 bit/5 sym),86.762527
+structural,dual,80,two separate arrays,10.271262
+structural,dual,85,fp16 dense,4.537359
+structural,dual,85,int8 dense,53.776812
+structural,dual,85,6-state 3-bit slot,47.561275
+structural,dual,85,Dual6 dual-plane,91.143119
+structural,dual,85,Dual6 interleaved (13 bit/5 sym),90.071895
+structural,dual,85,two separate arrays,7.703447
+structural,dual,90,fp16 dense,3.024906
+structural,dual,90,int8 dense,52.517875
+structural,dual,90,6-state 3-bit slot,48.374184
+structural,dual,90,Dual6 dual-plane,94.095413
+structural,dual,90,Dual6 interleaved (13 bit/5 sym),93.381264
+structural,dual,90,two separate arrays,5.135631
+structural,dual,95,fp16 dense,1.512453
+structural,dual,95,int8 dense,51.258937
+structural,dual,95,6-state 3-bit slot,49.187092
+structural,dual,95,Dual6 dual-plane,97.047706
+structural,dual,95,Dual6 interleaved (13 bit/5 sym),96.690632
+structural,dual,95,two separate arrays,2.567816
+structural,dual,100,fp16 dense,0
+structural,dual,100,int8 dense,50
+structural,dual,100,6-state 3-bit slot,50
+structural,dual,100,Dual6 dual-plane,100
+structural,dual,100,Dual6 interleaved (13 bit/5 sym),100
+structural,dual,100,two separate arrays,0
+storage,dual,0,fp16 dense,25.452267
+storage,dual,0,int8 dense,76.250076
+storage,dual,0,6-state 3-bit slot,31.190367
+storage,dual,0,Dual6 dual-plane,48.33486
+storage,dual,0,Dual6 interleaved (13 bit/5 sym),42.086643
+storage,dual,0,two separate arrays,32.436773
+storage,dual,5,fp16 dense,24.585919
+storage,dual,5,int8 dense,73.250103
+storage,dual,5,6-state 3-bit slot,33.964345
+storage,dual,5,Dual6 dual-plane,50.918117
+storage,dual,5,Dual6 interleaved (13 bit/5 sym),44.982077
+storage,dual,5,two separate arrays,35.814935
+storage,dual,10,fp16 dense,23.719571
+storage,dual,10,int8 dense,70.25013
+storage,dual,10,6-state 3-bit slot,36.738322
+storage,dual,10,Dual6 dual-plane,53.501374
+storage,dual,10,Dual6 interleaved (13 bit/5 sym),47.87751
+storage,dual,10,two separate arrays,39.193096
+storage,dual,15,fp16 dense,22.853223
+storage,dual,15,int8 dense,67.250156
+storage,dual,15,6-state 3-bit slot,39.5123
+storage,dual,15,Dual6 dual-plane,56.084631
+storage,dual,15,Dual6 interleaved (13 bit/5 sym),50.772943
+storage,dual,15,two separate arrays,42.571257
+storage,dual,20,fp16 dense,21.986875
+storage,dual,20,int8 dense,64.250183
+storage,dual,20,6-state 3-bit slot,42.286278
+storage,dual,20,Dual6 dual-plane,58.667888
+storage,dual,20,Dual6 interleaved (13 bit/5 sym),53.668376
+storage,dual,20,two separate arrays,45.949419
+storage,dual,25,fp16 dense,21.120526
+storage,dual,25,int8 dense,61.25021
+storage,dual,25,6-state 3-bit slot,45.060256
+storage,dual,25,Dual6 dual-plane,61.251145
+storage,dual,25,Dual6 interleaved (13 bit/5 sym),56.563809
+storage,dual,25,two separate arrays,49.32758
+storage,dual,30,fp16 dense,20.254178
+storage,dual,30,int8 dense,58.250237
+storage,dual,30,6-state 3-bit slot,47.834233
+storage,dual,30,Dual6 dual-plane,63.834402
+storage,dual,30,Dual6 interleaved (13 bit/5 sym),59.459242
+storage,dual,30,two separate arrays,52.705741
+storage,dual,35,fp16 dense,19.38783
+storage,dual,35,int8 dense,55.250263
+storage,dual,35,6-state 3-bit slot,50.608211
+storage,dual,35,Dual6 dual-plane,66.417659
+storage,dual,35,Dual6 interleaved (13 bit/5 sym),62.354675
+storage,dual,35,two separate arrays,56.083903
+storage,dual,40,fp16 dense,18.521482
+storage,dual,40,int8 dense,52.25029
+storage,dual,40,6-state 3-bit slot,53.382189
+storage,dual,40,Dual6 dual-plane,69.000916
+storage,dual,40,Dual6 interleaved (13 bit/5 sym),65.250108
+storage,dual,40,two separate arrays,59.462064
+storage,dual,45,fp16 dense,17.655134
+storage,dual,45,int8 dense,49.250317
+storage,dual,45,6-state 3-bit slot,56.156167
+storage,dual,45,Dual6 dual-plane,71.584173
+storage,dual,45,Dual6 interleaved (13 bit/5 sym),68.145541
+storage,dual,45,two separate arrays,62.840225
+storage,dual,50,fp16 dense,16.788786
+storage,dual,50,int8 dense,46.250343
+storage,dual,50,6-state 3-bit slot,58.930144
+storage,dual,50,Dual6 dual-plane,74.16743
+storage,dual,50,Dual6 interleaved (13 bit/5 sym),71.040974
+storage,dual,50,two separate arrays,66.218387
+storage,dual,55,fp16 dense,15.922438
+storage,dual,55,int8 dense,43.25037
+storage,dual,55,6-state 3-bit slot,61.704122
+storage,dual,55,Dual6 dual-plane,76.750687
+storage,dual,55,Dual6 interleaved (13 bit/5 sym),73.936408
+storage,dual,55,two separate arrays,69.596548
+storage,dual,60,fp16 dense,15.05609
+storage,dual,60,int8 dense,40.250397
+storage,dual,60,6-state 3-bit slot,64.4781
+storage,dual,60,Dual6 dual-plane,79.333944
+storage,dual,60,Dual6 interleaved (13 bit/5 sym),76.831841
+storage,dual,60,two separate arrays,72.974709
+storage,dual,65,fp16 dense,14.189742
+storage,dual,65,int8 dense,37.250423
+storage,dual,65,6-state 3-bit slot,67.252078
+storage,dual,65,Dual6 dual-plane,81.917201
+storage,dual,65,Dual6 interleaved (13 bit/5 sym),79.727274
+storage,dual,65,two separate arrays,76.352871
+storage,dual,70,fp16 dense,13.323394
+storage,dual,70,int8 dense,34.25045
+storage,dual,70,6-state 3-bit slot,70.026055
+storage,dual,70,Dual6 dual-plane,84.500458
+storage,dual,70,Dual6 interleaved (13 bit/5 sym),82.622707
+storage,dual,70,two separate arrays,79.731032
+storage,dual,75,fp16 dense,12.457046
+storage,dual,75,int8 dense,31.250477
+storage,dual,75,6-state 3-bit slot,72.800033
+storage,dual,75,Dual6 dual-plane,87.083715
+storage,dual,75,Dual6 interleaved (13 bit/5 sym),85.51814
+storage,dual,75,two separate arrays,83.109193
+storage,dual,80,fp16 dense,11.590698
+storage,dual,80,int8 dense,28.250504
+storage,dual,80,6-state 3-bit slot,75.574011
+storage,dual,80,Dual6 dual-plane,89.666972
+storage,dual,80,Dual6 interleaved (13 bit/5 sym),88.413573
+storage,dual,80,two separate arrays,86.487355
+storage,dual,85,fp16 dense,10.724349
+storage,dual,85,int8 dense,25.25053
+storage,dual,85,6-state 3-bit slot,78.347989
+storage,dual,85,Dual6 dual-plane,92.250229
+storage,dual,85,Dual6 interleaved (13 bit/5 sym),91.309006
+storage,dual,85,two separate arrays,89.865516
+storage,dual,90,fp16 dense,9.858001
+storage,dual,90,int8 dense,22.250557
+storage,dual,90,6-state 3-bit slot,81.121966
+storage,dual,90,Dual6 dual-plane,94.833486
+storage,dual,90,Dual6 interleaved (13 bit/5 sym),94.204439
+storage,dual,90,two separate arrays,93.243677
+storage,dual,95,fp16 dense,8.991653
+storage,dual,95,int8 dense,19.250584
+storage,dual,95,6-state 3-bit slot,83.895944
+storage,dual,95,Dual6 dual-plane,97.416743
+storage,dual,95,Dual6 interleaved (13 bit/5 sym),97.099872
+storage,dual,95,two separate arrays,96.621839
+storage,dual,100,fp16 dense,8.125305
+storage,dual,100,int8 dense,16.25061
+storage,dual,100,6-state 3-bit slot,86.669922
+storage,dual,100,Dual6 dual-plane,100
+storage,dual,100,Dual6 interleaved (13 bit/5 sym),99.995305
+storage,dual,100,two separate arrays,100
+selective,dual,0,fp16 dense,25.842892
+selective,dual,0,int8 dense,77.031326
+selective,dual,0,6-state 3-bit slot,35.357034
+selective,dual,0,Dual6 dual-plane,48.33486
+selective,dual,0,Dual6 interleaved (13 bit/5 sym),46.893929
+selective,dual,0,two separate arrays,32.436773
+selective,dual,5,fp16 dense,24.800763
+selective,dual,5,int8 dense,73.67979
+selective,dual,5,6-state 3-bit slot,36.256011
+selective,dual,5,Dual6 dual-plane,50.918117
+selective,dual,5,Dual6 interleaved (13 bit/5 sym),47.626084
+selective,dual,5,two separate arrays,35.814935
+selective,dual,10,fp16 dense,23.758633
+selective,dual,10,int8 dense,70.328255
+selective,dual,10,6-state 3-bit slot,37.154989
+selective,dual,10,Dual6 dual-plane,53.501374
+selective,dual,10,Dual6 interleaved (13 bit/5 sym),48.358238
+selective,dual,10,two separate arrays,39.193096
+selective,dual,15,fp16 dense,22.716504
+selective,dual,15,int8 dense,66.976719
+selective,dual,15,6-state 3-bit slot,38.053967
+selective,dual,15,Dual6 dual-plane,56.084631
+selective,dual,15,Dual6 interleaved (13 bit/5 sym),49.090393
+selective,dual,15,two separate arrays,42.571257
+selective,dual,20,fp16 dense,21.674375
+selective,dual,20,int8 dense,63.625183
+selective,dual,20,6-state 3-bit slot,38.952945
+selective,dual,20,Dual6 dual-plane,58.667888
+selective,dual,20,Dual6 interleaved (13 bit/5 sym),49.822547
+selective,dual,20,two separate arrays,45.949419
+selective,dual,25,fp16 dense,20.632245
+selective,dual,25,int8 dense,60.273647
+selective,dual,25,6-state 3-bit slot,39.851922
+selective,dual,25,Dual6 dual-plane,61.251145
+selective,dual,25,Dual6 interleaved (13 bit/5 sym),50.554701
+selective,dual,25,two separate arrays,49.32758
+selective,dual,30,fp16 dense,19.590116
+selective,dual,30,int8 dense,56.922112
+selective,dual,30,6-state 3-bit slot,40.7509
+selective,dual,30,Dual6 dual-plane,63.834402
+selective,dual,30,Dual6 interleaved (13 bit/5 sym),51.286856
+selective,dual,30,two separate arrays,52.705741
+selective,dual,35,fp16 dense,18.547987
+selective,dual,35,int8 dense,53.570576
+selective,dual,35,6-state 3-bit slot,41.649878
+selective,dual,35,Dual6 dual-plane,66.417659
+selective,dual,35,Dual6 interleaved (13 bit/5 sym),52.01901
+selective,dual,35,two separate arrays,56.083903
+selective,dual,40,fp16 dense,17.505857
+selective,dual,40,int8 dense,50.21904
+selective,dual,40,6-state 3-bit slot,42.548856
+selective,dual,40,Dual6 dual-plane,69.000916
+selective,dual,40,Dual6 interleaved (13 bit/5 sym),52.751164
+selective,dual,40,two separate arrays,59.462064
+selective,dual,45,fp16 dense,16.463728
+selective,dual,45,int8 dense,46.867504
+selective,dual,45,6-state 3-bit slot,43.447833
+selective,dual,45,Dual6 dual-plane,71.584173
+selective,dual,45,Dual6 interleaved (13 bit/5 sym),53.483319
+selective,dual,45,two separate arrays,62.840225
+selective,dual,50,fp16 dense,15.421599
+selective,dual,50,int8 dense,43.515968
+selective,dual,50,6-state 3-bit slot,44.346811
+selective,dual,50,Dual6 dual-plane,74.16743
+selective,dual,50,Dual6 interleaved (13 bit/5 sym),54.215473
+selective,dual,50,two separate arrays,66.218387
+selective,dual,55,fp16 dense,14.379469
+selective,dual,55,int8 dense,40.164433
+selective,dual,55,6-state 3-bit slot,45.245789
+selective,dual,55,Dual6 dual-plane,76.750687
+selective,dual,55,Dual6 interleaved (13 bit/5 sym),54.947628
+selective,dual,55,two separate arrays,69.596548
+selective,dual,60,fp16 dense,13.33734
+selective,dual,60,int8 dense,36.812897
+selective,dual,60,6-state 3-bit slot,46.144767
+selective,dual,60,Dual6 dual-plane,79.333944
+selective,dual,60,Dual6 interleaved (13 bit/5 sym),55.679782
+selective,dual,60,two separate arrays,72.974709
+selective,dual,65,fp16 dense,12.295211
+selective,dual,65,int8 dense,33.461361
+selective,dual,65,6-state 3-bit slot,47.043744
+selective,dual,65,Dual6 dual-plane,81.917201
+selective,dual,65,Dual6 interleaved (13 bit/5 sym),56.411936
+selective,dual,65,two separate arrays,76.352871
+selective,dual,70,fp16 dense,11.253081
+selective,dual,70,int8 dense,30.109825
+selective,dual,70,6-state 3-bit slot,47.942722
+selective,dual,70,Dual6 dual-plane,84.500458
+selective,dual,70,Dual6 interleaved (13 bit/5 sym),57.144091
+selective,dual,70,two separate arrays,79.731032
+selective,dual,75,fp16 dense,10.210952
+selective,dual,75,int8 dense,26.758289
+selective,dual,75,6-state 3-bit slot,48.8417
+selective,dual,75,Dual6 dual-plane,87.083715
+selective,dual,75,Dual6 interleaved (13 bit/5 sym),57.876245
+selective,dual,75,two separate arrays,83.109193
+selective,dual,80,fp16 dense,9.168823
+selective,dual,80,int8 dense,23.406754
+selective,dual,80,6-state 3-bit slot,49.740678
+selective,dual,80,Dual6 dual-plane,89.666972
+selective,dual,80,Dual6 interleaved (13 bit/5 sym),58.6084
+selective,dual,80,two separate arrays,86.487355
+selective,dual,85,fp16 dense,8.126693
+selective,dual,85,int8 dense,20.055218
+selective,dual,85,6-state 3-bit slot,50.639655
+selective,dual,85,Dual6 dual-plane,92.250229
+selective,dual,85,Dual6 interleaved (13 bit/5 sym),59.340554
+selective,dual,85,two separate arrays,89.865516
+selective,dual,90,fp16 dense,7.084564
+selective,dual,90,int8 dense,16.703682
+selective,dual,90,6-state 3-bit slot,51.538633
+selective,dual,90,Dual6 dual-plane,94.833486
+selective,dual,90,Dual6 interleaved (13 bit/5 sym),60.072708
+selective,dual,90,two separate arrays,93.243677
+selective,dual,95,fp16 dense,6.042435
+selective,dual,95,int8 dense,13.352146
+selective,dual,95,6-state 3-bit slot,52.437611
+selective,dual,95,Dual6 dual-plane,97.416743
+selective,dual,95,Dual6 interleaved (13 bit/5 sym),60.804863
+selective,dual,95,two separate arrays,96.621839
+selective,dual,100,fp16 dense,5.000305
+selective,dual,100,int8 dense,10.00061
+selective,dual,100,6-state 3-bit slot,53.336589
+selective,dual,100,Dual6 dual-plane,100
+selective,dual,100,Dual6 interleaved (13 bit/5 sym),61.537017
+selective,dual,100,two separate arrays,100

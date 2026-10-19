@@ -1,0 +1,46 @@
+analysis,payload,scheme,draws,encoding,wins,share
+random_simplex,trit,s1,5000,int8 dense,4299,0.8598
+random_simplex,trit,s1,5000,Dual6 dual-plane (trit-only frame),657,0.1314
+random_simplex,trit,s1,5000,TQ1_0 (5 trit/byte),24,0.0048
+random_simplex,trit,s1,5000,two separate arrays,20,0.004
+random_simplex,trit,s1,5000,6-state 3-bit slot,0,0
+random_simplex,trit,s1,5000,Dual6 dual-plane,0,0
+random_simplex,trit,s1,5000,Dual6 interleaved (13 bit/5 sym),0,0
+random_simplex,trit,s1,5000,TQ2_0 (2 bit/trit),0,0
+random_simplex,trit,s1,5000,fp16 dense,0,0
+random_simplex,trit,s2,5000,int8 dense,4282,0.8564
+random_simplex,trit,s2,5000,Dual6 dual-plane (trit-only frame),681,0.1362
+random_simplex,trit,s2,5000,TQ1_0 (5 trit/byte),21,0.0042
+random_simplex,trit,s2,5000,two separate arrays,16,0.0032
+random_simplex,trit,s2,5000,6-state 3-bit slot,0,0
+random_simplex,trit,s2,5000,Dual6 dual-plane,0,0
+random_simplex,trit,s2,5000,Dual6 interleaved (13 bit/5 sym),0,0
+random_simplex,trit,s2,5000,TQ2_0 (2 bit/trit),0,0
+random_simplex,trit,s2,5000,fp16 dense,0,0
+random_simplex,trit,s3,5000,int8 dense,4302,0.8604
+random_simplex,trit,s3,5000,Dual6 dual-plane (trit-only frame),662,0.1324
+random_simplex,trit,s3,5000,two separate arrays,22,0.0044
+random_simplex,trit,s3,5000,TQ1_0 (5 trit/byte),14,0.0028
+random_simplex,trit,s3,5000,6-state 3-bit slot,0,0
+random_simplex,trit,s3,5000,Dual6 dual-plane,0,0
+random_simplex,trit,s3,5000,Dual6 interleaved (13 bit/5 sym),0,0
+random_simplex,trit,s3,5000,TQ2_0 (2 bit/trit),0,0
+random_simplex,trit,s3,5000,fp16 dense,0,0
+random_simplex,dual,s1,5000,int8 dense,4189,0.8378
+random_simplex,dual,s1,5000,Dual6 dual-plane,798,0.1596
+random_simplex,dual,s1,5000,two separate arrays,13,0.0026
+random_simplex,dual,s1,5000,6-state 3-bit slot,0,0
+random_simplex,dual,s1,5000,Dual6 interleaved (13 bit/5 sym),0,0
+random_simplex,dual,s1,5000,fp16 dense,0,0
+random_simplex,dual,s2,5000,int8 dense,4173,0.8346
+random_simplex,dual,s2,5000,Dual6 dual-plane,807,0.1614
+random_simplex,dual,s2,5000,two separate arrays,20,0.004
+random_simplex,dual,s2,5000,6-state 3-bit slot,0,0
+random_simplex,dual,s2,5000,Dual6 interleaved (13 bit/5 sym),0,0
+random_simplex,dual,s2,5000,fp16 dense,0,0
+random_simplex,dual,s3,5000,int8 dense,4193,0.8386
+random_simplex,dual,s3,5000,Dual6 dual-plane,782,0.1564
+random_simplex,dual,s3,5000,two separate arrays,25,0.005
+random_simplex,dual,s3,5000,6-state 3-bit slot,0,0
+random_simplex,dual,s3,5000,Dual6 interleaved (13 bit/5 sym),0,0
+random_simplex,dual,s3,5000,fp16 dense,0,0

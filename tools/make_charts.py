@@ -270,6 +270,129 @@ def chart_bandwidth_crossover():
     save(fig, "bandwidth-crossover.png")
 
 
+
+
+def chart_weight_sensitivity():
+    """Win shares under random weights, plus one-dimensional flip sweeps."""
+    sens = rows("weight_sensitivity.csv")
+    sweeps = rows("weight_sweeps.csv")
+    fig, axes = plt.subplots(2, 2, figsize=(11.0, 6.6))
+
+    for ax, payload in zip(axes[0], ("trit", "dual")):
+        subset = [r for r in sens if r["payload"] == payload and r["scheme"] == "s1"]
+        subset.sort(key=lambda r: -float(r["share"]))
+        subset = [r for r in subset if float(r["share"]) > 0.001][:6]
+        labels = [ENCODING_SHORT.get(r["encoding"], r["encoding"]) for r in subset]
+        shares = [float(r["share"]) * 100 for r in subset]
+        colors = [ENCODING_COLORS.get(r["encoding"], GREY) for r in subset]
+        ax.barh(range(len(labels)), shares, color=colors)
+        ax.set_yticks(range(len(labels)))
+        ax.set_yticklabels(labels, fontsize=7.5)
+        ax.invert_yaxis()
+        ax.set_xlabel("win share under pseudo-random weights (%)")
+        ax.set_title(f"{payload} payload")
+        for i, share in enumerate(shares):
+            ax.text(share + 0.5, i, f"{share:.1f}%", va="center", fontsize=7)
+
+    for ax, (payload, analysis) in zip(
+        axes[1],
+        (("trit", "structural"), ("dual", "selective")),
+    ):
+        subset = [r for r in sweeps if r["payload"] == payload and r["analysis"] == analysis]
+        encodings = sorted({r["encoding"] for r in subset})
+        top = sorted(
+            encodings,
+            key=lambda e: -max(float(r["score"]) for r in subset if r["encoding"] == e),
+        )[:3]
+        for encoding in top:
+            pts = sorted(
+                (float(r["parameter"]), float(r["score"]))
+                for r in subset if r["encoding"] == encoding
+            )
+            ax.plot(
+                [p[0] for p in pts],
+                [p[1] for p in pts],
+                "o-",
+                ms=3,
+                lw=1.4,
+                color=ENCODING_COLORS.get(encoding, GREY),
+                label=ENCODING_SHORT.get(encoding, encoding),
+            )
+        ax.set_xlabel(f"{analysis} weight (%)")
+        ax.set_ylabel("score (0-100)")
+        ax.set_title(f"{payload} payload: {analysis} sweep")
+        ax.legend(frameon=False, fontsize=7)
+
+    fig.suptitle("Weight sensitivity: the winner depends on what you weigh",
+                 y=1.01, fontsize=10, fontweight="bold")
+    save(fig, "weight-sensitivity.png")
+
+
+
+def chart_composite_scores():
+    """Equal-weight comprehensive score, one panel per payload."""
+    data = rows("composite_scores.csv")
+    proxy = rows("xs_scores.csv")
+    fig, axes = plt.subplots(
+        1, 3, figsize=(12.0, 3.6), sharex=False,
+        gridspec_kw={"width_ratios": [9, 6, 3]},
+    )
+    panels = (
+        (axes[0], "trit", "T payload (trit-only)"),
+        (axes[1], "dual", "I payload (independent pair)"),
+    )
+    for ax, payload, title in panels:
+        subset = sorted(
+            (r for r in data if r["payload"] == payload),
+            key=lambda r: float(r["composite_score"]),
+        )
+        labels = [ENCODING_SHORT.get(r["encoding"], r["encoding"]) for r in subset]
+        scores = [float(r["composite_score"]) for r in subset]
+        colors = [ENCODING_COLORS.get(r["encoding"], GREY) for r in subset]
+        ax.barh(range(len(labels)), scores, color=colors)
+        ax.set_yticks(range(len(labels)))
+        ax.set_yticklabels(labels, fontsize=7)
+        ax.set_xlim(0, 100)
+        ax.set_xlabel("equal-weight composite score (0-100)")
+        ax.set_title(title)
+        for i, score in enumerate(scores):
+            ax.text(score + 1, i, f"{score:.1f}", va="center", fontsize=6.5)
+    ax = axes[2]
+    labels = ["S shadow", "X exact"]
+    scores = [float(r["composite_score"]) for r in sorted(proxy, key=lambda r: float(r["composite_score"]))]
+    ax.barh(range(len(labels)), scores, color=[PURPLE, BAD], hatch="//", edgecolor="white")
+    ax.set_yticks(range(len(labels)))
+    ax.set_yticklabels(labels, fontsize=7)
+    ax.set_xlim(0, 100)
+    ax.set_xlabel("mixed score")
+    ax.set_title("X/S (measured decode)")
+    for i, score in enumerate(scores):
+        ax.text(score + 1, i, f"{score:.1f}", va="center", fontsize=6.5)
+    fig.suptitle("All encodings in one score: nine metrics + information utilization",
+                 y=1.02, fontsize=10, fontweight="bold")
+    save(fig, "composite-scores.png")
+
+
+
+def chart_information_budget():
+    """Information vs storage for the T / I / X / S data models."""
+    data = rows("information_budget.csv")
+    fig, ax = plt.subplots(figsize=(6.8, 3.4))
+    x = list(range(len(data)))
+    info = [float(r["info_bits_per_element"]) for r in data]
+    storage = [float(r["dual6_storage_bits_per_element"]) for r in data]
+    ax.bar([i - 0.2 for i in x], storage, width=0.4, color=GREY, label="Dual6 storage")
+    ax.bar([i + 0.2 for i in x], info, width=0.4, color=D6, label="information")
+    for i, (inf, sto) in enumerate(zip(info, storage)):
+        ax.text(i, max(inf, sto) + 0.05, f"{inf / sto * 100:.0f}% used",
+                ha="center", fontsize=7)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"{r['data_model']} {r['name']}" for r in data], fontsize=7.5)
+    ax.set_ylabel("bits per element")
+    ax.set_title("Dual6 is optimal only when the two channels are independent")
+    ax.legend(frameon=False, fontsize=7.5)
+    save(fig, "information-budget.png")
+
 def main():
     chart_scorecard()
     chart_sparse_plane()
@@ -277,6 +400,9 @@ def main():
     chart_fault_size()
     chart_scenario_scores()
     chart_bandwidth_crossover()
+    chart_weight_sensitivity()
+    chart_composite_scores()
+    chart_information_budget()
 
 
 if __name__ == "__main__":

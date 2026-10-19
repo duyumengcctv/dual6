@@ -1,0 +1,16 @@
+payload,encoding,reference,decode_ns_per_element,decode_ns_net,decode_ns_native,compute_source,decode_net_clamped,ratio_raw_vs_reference,ratio_net_vs_reference,ratio_native_vs_reference
+trit,fp16 dense,Dual6 dual-plane (trit-only frame),43.79425,23.931885,0.035,memcpy_floor,0,1.788858,2.472647,12.8
+trit,int8 dense,Dual6 dual-plane (trit-only frame),16.079712,0.1,0.035,memcpy_floor,1,4.872082,591.751099,12.8
+trit,TQ1_0 (5 trit/byte),Dual6 dual-plane (trit-only frame),78.477478,59.329224,0.45,measured_native,0,0.99827,0.997402,0.995556
+trit,TQ2_0 (2 bit/trit),Dual6 dual-plane (trit-only frame),67.596436,48.547363,0.562,measured_native,0,1.158962,1.218915,0.797153
+trit,6-state 3-bit slot,Dual6 dual-plane (trit-only frame),249.56665,230.374145,1.015,measured_native,0,0.313911,0.256865,0.441379
+trit,Dual6 dual-plane,Dual6 dual-plane (trit-only frame),139.822388,119.143677,0.448,measured_native,0,0.560294,0.49667,1
+trit,Dual6 dual-plane (trit-only frame),Dual6 dual-plane (trit-only frame),78.341675,59.17511,0.448,measured_native,0,1,1,1
+trit,Dual6 interleaved (13 bit/5 sym),Dual6 dual-plane (trit-only frame),133.349609,113.648987,1.648,measured_native,0,0.587491,0.520683,0.271845
+trit,two separate arrays,Dual6 dual-plane (trit-only frame),99.317932,79.962158,0.448,measured_native,0,0.788797,0.740039,1
+dual,fp16 dense,Dual6 dual-plane,74.931335,55.818176,0.035,memcpy_floor,0,1.937728,2.251032,12.8
+dual,int8 dense,Dual6 dual-plane,32.093811,11.03363,0.035,memcpy_floor,0,4.524129,11.387775,12.8
+dual,6-state 3-bit slot,Dual6 dual-plane,250.726318,231.735229,1.015,measured_native,0,0.579104,0.542207,0.441379
+dual,Dual6 dual-plane,Dual6 dual-plane,145.196533,125.648499,0.448,measured_native,0,1,1,1
+dual,Dual6 interleaved (13 bit/5 sym),Dual6 dual-plane,132.421875,112.776184,1.648,measured_native,0,1.096469,1.11414,0.271845
+dual,two separate arrays,Dual6 dual-plane,155.487061,135.647583,0.448,measured_native,0,0.933817,0.926286,1

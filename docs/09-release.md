@@ -69,8 +69,10 @@ python tools/verify_package.py --build --install-test
 | `tools/verify_package.py` | 构建 wheel + sdist，检查内容并在临时 venv 里安装冒烟 |
 | `tools/native_coverage.py` | 检查 Rust 导出、`_native.pyi` 与公开 API 是否一致 |
 | `tools/check_version.py` | 检查四处版本号一致 |
-| `tools/make_scores.py` | 重建 `scenario_scores.csv` / `bandwidth_sweep.csv`；`--check` 校验未过期 |
-| `tools/make_charts.py` | 从 CSV 重建 6 张图（需要 matplotlib） |
+| `tools/make_scores.py` | 重建 8 份派生 CSV（场景、带宽、综合评分、X/S 评分、信息预算、解码比值、权重敏感性、权重扫描）；`--check` 校验未过期 |
+| `tools/make_charts.py` | 从 CSV 重建 9 张图（需要 matplotlib） |
+| `tools/bench_xs.py` | X/S 解码路径微基准；`--check-csv` 纯离线校验 |
+| `tools/model_roundtrip.py` | 可选：真实小模型无损性实验；`--check-csv` 纯离线校验 |
 
 ## 4. 发布产物
 

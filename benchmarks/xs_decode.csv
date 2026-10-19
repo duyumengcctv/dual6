@@ -1,0 +1,17 @@
+case,data_model,view,implementation,elements,repeats,trials,ns_per_element,backend,method,notes
+I_bit_channel,I,bit,"dual6.unpack_bits_bytes(bit_bytes, n)",65536,50,5,5.109619,native,raw min-of-5 batches; no loop-baseline subtraction,LUT unpack of one bit plane
+I_dual_plane_full,I,both,dual6.unpack_dual_plane_v2(frame),65536,20,5,18.974991,native,raw min-of-5 batches; no loop-baseline subtraction,full D6P2 dual-plane decode
+I_trit_channel,I,trit,"dual6.unpack_trits_bytes(trit_bytes, n)",65536,50,5,5.944458,native,raw min-of-5 batches; no loop-baseline subtraction,LUT unpack of one trit plane
+S_trit_plus_bit,S,trit+derived bit,unpack_trits_bytes + [t != 0],65536,50,5,30.786407,native,raw min-of-5 batches; no loop-baseline subtraction,trit unpack plus derived bit
+X_binary_view,X,bit,exact_dual.read_binary(symbols),63,20000,5,117.454286,native,raw min-of-5 batches; no loop-baseline subtraction,Python exact-dual binary view
+X_demux,X,both,dual6.demux(symbols),63,20000,5,23.833571,native,raw min-of-5 batches; no loop-baseline subtraction,batch demux of the exact-dual symbol stream
+X_ternary_view,X,trit,exact_dual.read_ternary(symbols),63,20000,5,110.835079,native,raw min-of-5 batches; no loop-baseline subtraction,Python exact-dual ternary view
+digit_decode,T,symbol,[dual6.decode_digit(d) for d in symbols],63,20000,5,317.163492,native,raw min-of-5 batches; no loop-baseline subtraction,one 6-state symbol arithmetic step per element
+I_bit_channel,I,bit,"dual6.unpack_bits_bytes(bit_bytes, n)",65536,50,5,10.370392,ref,raw min-of-5 batches; no loop-baseline subtraction,LUT unpack of one bit plane
+I_dual_plane_full,I,both,dual6.unpack_dual_plane_v2(frame),65536,20,5,28.99437,ref,raw min-of-5 batches; no loop-baseline subtraction,full D6P2 dual-plane decode
+I_trit_channel,I,trit,"dual6.unpack_trits_bytes(trit_bytes, n)",65536,50,5,15.19455,ref,raw min-of-5 batches; no loop-baseline subtraction,LUT unpack of one trit plane
+S_trit_plus_bit,S,trit+derived bit,unpack_trits_bytes + [t != 0],65536,50,5,39.754883,ref,raw min-of-5 batches; no loop-baseline subtraction,trit unpack plus derived bit
+X_binary_view,X,bit,exact_dual.read_binary(symbols),63,20000,5,117.982302,ref,raw min-of-5 batches; no loop-baseline subtraction,Python exact-dual binary view
+X_demux,X,both,dual6.demux(symbols),63,20000,5,137.356905,ref,raw min-of-5 batches; no loop-baseline subtraction,batch demux of the exact-dual symbol stream
+X_ternary_view,X,trit,exact_dual.read_ternary(symbols),63,20000,5,110.38619,ref,raw min-of-5 batches; no loop-baseline subtraction,Python exact-dual ternary view
+digit_decode,T,symbol,[dual6.decode_digit(d) for d in symbols],63,20000,5,118.83881,ref,raw min-of-5 batches; no loop-baseline subtraction,one 6-state symbol arithmetic step per element

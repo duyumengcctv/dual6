@@ -22,6 +22,9 @@ Thumbs.db
 coverage.xml
 htmlcov/
 
+# Local model checkpoints (model_roundtrip.py downloads here)
+models/
+
 # Packaging
 dist/
 build/

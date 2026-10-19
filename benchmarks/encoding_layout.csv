@@ -1,0 +1,16 @@
+encoding,payload,layout,payload_bytes,frame_header_bytes,bit_plane_bytes,trit_plane_bytes,objects,selective_bytes_bit,selective_bytes_trit,selective_bytes_worst,notes
+fp16 dense,trit,dense_fp16,131072,0,131072,131072,1,131072,131072,131072,one fp16 per trit; no plane split
+int8 dense,trit,dense_int8,65536,0,65536,65536,1,65536,65536,65536,one int8 per trit; no plane split
+TQ1_0 (5 trit/byte),trit,packed_5trit,13108,0,13108,13108,1,13108,13108,13108,single packed stream
+TQ2_0 (2 bit/trit),trit,packed_2bit,16384,0,16384,16384,1,16384,16384,16384,single packed stream
+6-state 3-bit slot,trit,slot3,24576,0,24576,24576,1,24576,24576,24576,single slot stream
+Dual6 dual-plane,trit,dual_plane,21300,33,8192,13108,1,8192,13108,13108,bit plane present; a trit-only payload reads the trit plane
+Dual6 dual-plane (trit-only frame),trit,dual_plane_omit_bit,13108,33,0,13108,1,0,13108,13108,bit plane omitted
+Dual6 interleaved (13 bit/5 sym),trit,interleaved,21301,33,21301,21301,1,21301,21301,21301,channels are interleaved and cannot be separated
+two separate arrays,trit,separate_arrays,13108,0,0,13108,1,0,13108,13108,one trit array; no frame or checksum
+fp16 dense,dual,dense_fp16,262144,0,262144,262144,1,262144,262144,262144,two fp16 per element; no plane split
+int8 dense,dual,dense_int8,131072,0,131072,131072,1,131072,131072,131072,two int8 per element; no plane split
+6-state 3-bit slot,dual,slot3,24576,0,24576,24576,1,24576,24576,24576,single slot stream
+Dual6 dual-plane,dual,dual_plane,21300,33,8192,13108,1,8192,13108,13108,bit channel 8192 B; trit channel 13108 B
+Dual6 interleaved (13 bit/5 sym),dual,interleaved,21301,33,21301,21301,1,21301,21301,21301,channels are interleaved and cannot be separated
+two separate arrays,dual,separate_arrays,21300,0,8192,13108,2,8192,13108,13108,"two objects: bit array 8192 B, trit array 13108 B"

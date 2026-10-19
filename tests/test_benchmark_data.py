@@ -30,8 +30,19 @@ class DataFiles(unittest.TestCase):
         for name in (
             "scorecard_raw.csv",
             "scenario_weights.csv",
+            "encoding_layout.csv",
+            "data_models.csv",
+            "encoding_taxonomy.csv",
             "scenario_scores.csv",
             "bandwidth_sweep.csv",
+            "composite_scores.csv",
+            "xs_scores.csv",
+            "xs_decode.csv",
+            "information_budget.csv",
+            "decode_ratios.csv",
+            "weight_sensitivity.csv",
+            "weight_sweeps.csv",
+            "model_roundtrip.csv",
             "sparse_plane.csv",
             "mask_structure.csv",
             "fault_size.csv",
@@ -48,11 +59,14 @@ class DataFiles(unittest.TestCase):
             found,
             [
                 "bandwidth-crossover.png",
+                "composite-scores.png",
                 "fault-size.png",
+                "information-budget.png",
                 "mask-structure.png",
                 "scenario-scores.png",
                 "scorecard.png",
                 "sparse-plane.png",
+                "weight-sensitivity.png",
             ],
         )
 
@@ -60,7 +74,9 @@ class DataFiles(unittest.TestCase):
         for readme in ("README.md", "README.zh-CN.md"):
             text = read(readme)
             for name in ("scorecard.png", "sparse-plane.png", "mask-structure.png",
-                         "fault-size.png", "scenario-scores.png", "bandwidth-crossover.png"):
+                         "fault-size.png", "scenario-scores.png", "bandwidth-crossover.png",
+                         "weight-sensitivity.png", "composite-scores.png",
+                         "information-budget.png"):
                 with self.subTest(readme=readme, chart=name):
                     self.assertIn("benchmarks/charts/" + name, text)
 
@@ -79,10 +95,18 @@ class Scorecard(unittest.TestCase):
 
 
 NAME_EN = {
+    "TQ1_0": "TQ1_0 (5 trit/byte)",
+    "TQ2_0": "TQ2_0 (2 bit/trit)",
     "Dual6 dual-plane (trit-only)": "Dual6 dual-plane (trit-only frame)",
+    "Dual6 trit-only": "Dual6 dual-plane (trit-only frame)",
     "Dual6 interleaved (13 bit)": "Dual6 interleaved (13 bit/5 sym)",
+    "Dual6 interleaved": "Dual6 interleaved (13 bit/5 sym)",
+    "two arrays": "two separate arrays",
+    "6-state slot": "6-state 3-bit slot",
 }
 NAME_ZH = {
+    "TQ1_0": "TQ1_0 (5 trit/byte)",
+    "TQ2_0": "TQ2_0 (2 bit/trit)",
     "fp16 稠密": "fp16 dense",
     "int8 稠密": "int8 dense",
     "6 态 3-bit 槽": "6-state 3-bit slot",
@@ -90,6 +114,10 @@ NAME_ZH = {
     "Dual6 双平面（trit-only）": "Dual6 dual-plane (trit-only frame)",
     "Dual6 交错（13 bit）": "Dual6 interleaved (13 bit/5 sym)",
     "两份独立数组": "two separate arrays",
+    "Dual6 trit-only": "Dual6 dual-plane (trit-only frame)",
+    "Dual6 interleaved": "Dual6 interleaved (13 bit/5 sym)",
+    "two arrays": "two separate arrays",
+    "6-state slot": "6-state 3-bit slot",
 }
 
 LOWER = (
@@ -104,7 +132,7 @@ LOWER = (
 HIGHER = ("integrity", "single_object")
 SKIP_FIRST = {
     "Encoding", "encoding", "编码", "Scenario", "场景",
-    "Bandwidth (GB/s)", "带宽 (GB/s)",
+    "Bandwidth (GB/s)", "带宽 (GB/s)", "Rank", "排名", "Model", "模型",
 }
 # Column order used by the hand-written weights table (same as the CSV).
 METRIC_ORDER = LOWER[:6] + HIGHER + ("ops_per_element",)
@@ -164,11 +192,13 @@ class ScorecardTables(unittest.TestCase):
 
     def _check_table(self, table_rows, payload, mapping):
         data = {(r["encoding"], r["payload"]): r for r in rows("scorecard_raw.csv")}
+        layout = {(r["encoding"], r["payload"]): r for r in rows("encoding_layout.csv")}
         expected = 9 if payload == "trit" else 6
         self.assertEqual(len(table_rows), expected)
         for cells in table_rows:
             name = _name(cells, mapping)
             row = data[(name, payload)]
+            lay = layout[(name, payload)]
             with self.subTest(encoding=name, payload=payload):
                 self.assertAlmostEqual(float(cells[1]), float(row["bits_per_element"]), places=2)
                 self.assertAlmostEqual(float(cells[2]), float(row["encode_ns_per_element"]), delta=0.05)
@@ -178,29 +208,30 @@ class ScorecardTables(unittest.TestCase):
                 self.assertEqual("†" in cells[4], row["compute_source"] == "memcpy_floor")
                 self.assertAlmostEqual(float(cells[5]), float(row["random_ns_net"]), delta=0.05)
                 self.assertAlmostEqual(float(cells[6]), float(row["sparse_ns_net"]), delta=0.05)
-                self.assertEqual(int(cells[7]), int(row["selective_bytes"]))
-                self.assertEqual(cells[8] == "✓", row["integrity"] == "1")
-                self.assertEqual(cells[9] == "✓", row["single_object"] == "1")
+                self.assertEqual(int(cells[7]), int(lay["selective_bytes_bit"]))
+                self.assertEqual(int(cells[8]), int(lay["selective_bytes_trit"]))
+                self.assertEqual(cells[9] == "✓", row["integrity"] == "1")
+                self.assertEqual(cells[10] == "✓", row["single_object"] == "1")
 
     def test_readme_english_tables(self):
         text = read("README.md")
         self._check_table(
-            _section_rows(text, "#### Pure-trit payload", "#### Dual payload"),
+            _section_rows(text, "#### T payload: trit-only", "#### I payload: independent pair"),
             "trit", NAME_EN,
         )
         self._check_table(
-            _section_rows(text, "#### Dual payload", "#### Five weight sets"),
+            _section_rows(text, "#### I payload: independent pair", "#### Comprehensive score: T and I (equal weights)"),
             "dual", NAME_EN,
         )
 
     def test_readme_chinese_tables(self):
         text = read("README.zh-CN.md")
         self._check_table(
-            _section_rows(text, "#### 纯三值载荷", "#### 双载荷"),
+            _section_rows(text, "#### T 载荷：纯三值", "#### I 载荷：独立双通道"),
             "trit", NAME_ZH,
         )
         self._check_table(
-            _section_rows(text, "#### 双载荷", "#### 五组权重"),
+            _section_rows(text, "#### I 载荷：独立双通道", "#### 综合评分：T 与 I（等权）"),
             "dual", NAME_ZH,
         )
 
@@ -227,6 +258,7 @@ class ScenarioModel(unittest.TestCase):
 
     def test_scores_match_a_fresh_computation(self):
         scorecard = rows("scorecard_raw.csv")
+        layout = {(r["encoding"], r["payload"]): r for r in rows("encoding_layout.csv")}
         weights = {r["scenario"]: r for r in rows("scenario_weights.csv")}
         stored = {
             (r["scenario"], r["payload"], r["encoding"]): r
@@ -240,14 +272,19 @@ class ScenarioModel(unittest.TestCase):
                     continue
                 group = [r for r in scorecard if r["payload"] == payload]
                 entries = []
+                def value_of(row, metric, payload=payload):
+                    if metric == "selective_bytes":
+                        return float(layout[(row["encoding"], payload)]["selective_bytes_worst"])
+                    return float(row[metric])
+
                 for row in group:
                     sub = {}
                     for metric in LOWER:
-                        value = float(row[metric])
-                        best = min(float(r[metric]) for r in group)
+                        value = value_of(row, metric)
+                        best = min(value_of(r, metric) for r in group)
                         sub[metric] = best / value
                     for metric in HIGHER:
-                        sub[metric] = float(row[metric])
+                        sub[metric] = value_of(row, metric)
                     weighted = sum(
                         int(weights_row[m]) / 100.0 * sub[m] for m in LOWER + HIGHER
                     ) * 100.0
@@ -277,13 +314,14 @@ class ScenarioModel(unittest.TestCase):
             if int(row["rank"]) > 1:
                 runners.setdefault(key, row)
         sources = (
-            ("README.md", NAME_EN, "#### Five weight sets"),
-            ("README.zh-CN.md", NAME_ZH, "#### 五组权重"),
+            ("README.md", NAME_EN, "#### Conditional weights: five scenarios"),
+            ("README.zh-CN.md", NAME_ZH, "#### 条件权重：五组场景"),
             ("benchmarks/README.md", NAME_EN, "## `scenario_scores.csv` — generated"),
         )
         for readme, mapping, marker in sources:
             text = read(readme)
-            table_rows = [c for c in _section_rows(text, marker) if len(c) == 6]
+            end = "## `bandwidth_sweep.csv` — generated" if readme == "benchmarks/README.md" else None
+            table_rows = [c for c in _section_rows(text, marker, end) if len(c) == 6]
             self.assertGreaterEqual(len(table_rows), 7)
             for cells in table_rows:
                 key = (cells[0], cells[1])
@@ -298,8 +336,8 @@ class ScenarioModel(unittest.TestCase):
     def test_rendered_weight_tables(self):
         weights = {r["scenario"]: r for r in rows("scenario_weights.csv")}
         sources = (
-            ("README.md", "#### Five weight sets"),
-            ("README.zh-CN.md", "#### 五组权重"),
+            ("README.md", "#### Conditional weights: five scenarios"),
+            ("README.zh-CN.md", "#### 条件权重：五组场景"),
             ("benchmarks/README.md", "## `scenario_weights.csv` — policy, not measurement"),
         )
         for readme, marker in sources:
@@ -362,7 +400,8 @@ class BandwidthModel(unittest.TestCase):
         )
         for readme, mapping, marker in sources:
             text = read(readme)
-            tables = [c for c in _section_rows(text, marker) if len(c) == 5]
+            end = "## `composite_scores.csv` — generated" if readme == "benchmarks/README.md" else None
+            tables = [c for c in _section_rows(text, marker, end) if len(c) == 5]
             self.assertEqual(len(tables), 7)
             for cells in tables:
                 bandwidth = cells[0]
@@ -389,6 +428,501 @@ class BandwidthModel(unittest.TestCase):
             if r["payload"] == "trit" and r["bandwidth_gbps"] == "100" and r["rank"] == "1"
         ]
         self.assertEqual({r["encoding"] for r in at_hundred}, {"fp16 dense", "int8 dense"})
+
+
+class EncodingLayout(unittest.TestCase):
+    def test_layout_matches_scorecard(self):
+        raw = {(r["encoding"], r["payload"]): r for r in rows("scorecard_raw.csv")}
+        layout = rows("encoding_layout.csv")
+        self.assertEqual(len(layout), 15)
+        self.assertEqual({(r["encoding"], r["payload"]) for r in layout}, set(raw))
+        for row in layout:
+            key = (row["encoding"], row["payload"])
+            with self.subTest(key=key):
+                self.assertEqual(int(row["payload_bytes"]), int(raw[key]["bytes_total"]))
+                bit = int(row["bit_plane_bytes"])
+                trit = int(row["trit_plane_bytes"])
+                self.assertEqual(int(row["selective_bytes_bit"]), bit)
+                self.assertEqual(int(row["selective_bytes_trit"]), trit)
+                self.assertEqual(int(row["selective_bytes_worst"]), max(bit, trit))
+                self.assertIn(int(row["frame_header_bytes"]), (0, 33))
+                if row["layout"] in ("dual_plane", "dual_plane_omit_bit", "separate_arrays"):
+                    self.assertEqual(bit + trit, int(row["payload_bytes"]))
+                else:
+                    self.assertEqual(bit, int(row["payload_bytes"]))
+                    self.assertEqual(trit, int(row["payload_bytes"]))
+
+    def test_dual_channel_sizes(self):
+        layout = {(r["encoding"], r["payload"]): r for r in rows("encoding_layout.csv")}
+        row = layout[("Dual6 dual-plane", "dual")]
+        self.assertEqual(int(row["selective_bytes_bit"]), 8192)
+        self.assertEqual(int(row["selective_bytes_trit"]), 13108)
+        self.assertEqual(int(row["selective_bytes_worst"]), 13108)
+
+
+class DecodeRatios(unittest.TestCase):
+    def test_ratios_match_the_raw_csv(self):
+        raw = {(r["encoding"], r["payload"]): r for r in rows("scorecard_raw.csv")}
+        data = rows("decode_ratios.csv")
+        self.assertEqual(len(data), 15)
+        for row in data:
+            key = (row["encoding"], row["payload"])
+            reference = raw[(row["reference"], row["payload"])]
+            with self.subTest(key=key):
+                self.assertAlmostEqual(
+                    float(row["ratio_raw_vs_reference"]),
+                    float(reference["decode_ns_per_element"]) / float(row["decode_ns_per_element"]),
+                    places=5,
+                )
+                self.assertAlmostEqual(
+                    float(row["ratio_net_vs_reference"]),
+                    float(reference["decode_ns_net"]) / float(row["decode_ns_net"]),
+                    places=5,
+                )
+                self.assertAlmostEqual(
+                    float(row["ratio_native_vs_reference"]),
+                    float(reference["decode_ns_native"]) / float(row["decode_ns_native"]),
+                    places=5,
+                )
+                clamped = (
+                    1
+                    if float(row["decode_ns_per_element"])
+                    - float(raw[key]["py_loop_overhead_ns"])
+                    < 0
+                    else 0
+                )
+                self.assertEqual(int(row["decode_net_clamped"]), clamped)
+
+    def test_int8_is_the_clamped_row(self):
+        data = rows("decode_ratios.csv")
+        int8 = next(r for r in data if r["payload"] == "trit" and r["encoding"] == "int8 dense")
+        self.assertEqual(int(int8["decode_net_clamped"]), 1)
+        self.assertAlmostEqual(float(int8["ratio_raw_vs_reference"]), 4.87, delta=0.01)
+        self.assertAlmostEqual(float(int8["ratio_net_vs_reference"]), 591.75, delta=0.1)
+        self.assertAlmostEqual(float(int8["ratio_native_vs_reference"]), 12.8, delta=0.1)
+
+
+class WeightSensitivity(unittest.TestCase):
+    def test_shares_sum_to_one(self):
+        data = rows("weight_sensitivity.csv")
+        self.assertEqual(len(data), 45)
+        groups = {}
+        for row in data:
+            groups.setdefault((row["payload"], row["scheme"]), []).append(row)
+        for key, group in groups.items():
+            with self.subTest(key=key):
+                self.assertAlmostEqual(sum(float(r["share"]) for r in group), 1.0, places=5)
+                self.assertEqual(sum(int(r["wins"]) for r in group), int(group[0]["draws"]))
+
+    def test_random_simplex_headline(self):
+        data = rows("weight_sensitivity.csv")
+
+        def share(payload, encoding):
+            return float(
+                next(
+                    r["share"]
+                    for r in data
+                    if r["payload"] == payload
+                    and r["scheme"] == "s1"
+                    and r["encoding"] == encoding
+                )
+            )
+
+        self.assertAlmostEqual(share("trit", "int8 dense"), 0.8598, delta=0.005)
+        self.assertAlmostEqual(
+            share("trit", "Dual6 dual-plane (trit-only frame)"), 0.1314, delta=0.01
+        )
+        self.assertAlmostEqual(share("dual", "int8 dense"), 0.8378, delta=0.005)
+        self.assertAlmostEqual(share("dual", "Dual6 dual-plane"), 0.1596, delta=0.01)
+
+
+class WeightSweeps(unittest.TestCase):
+    def _score(self, layout, scorecard, payload, analysis, parameter, encoding):
+        group = [r for r in scorecard if r["payload"] == payload]
+
+        def value_of(row, metric):
+            if metric == "selective_bytes":
+                return float(layout[(row["encoding"], payload)]["selective_bytes_worst"])
+            return float(row[metric])
+
+        best = {m: min(value_of(r, m) for r in group) for m in LOWER}
+        row = next(r for r in group if r["encoding"] == encoding)
+        sub = {m: best[m] / value_of(row, m) for m in LOWER}
+        sub.update({m: value_of(row, m) for m in HIGHER})
+        if analysis == "structural":
+            weights = {m: (100.0 - parameter) / len(LOWER) for m in LOWER}
+            weights["integrity"] = parameter / 2.0
+            weights["single_object"] = parameter / 2.0
+        else:
+            target = "bits_per_element" if analysis == "storage" else "selective_bytes"
+            weights = {
+                m: (100.0 - parameter) / (len(LOWER) + len(HIGHER) - 1)
+                for m in LOWER + HIGHER
+                if m != target
+            }
+            weights[target] = float(parameter)
+        return sum(weights[m] / 100.0 * sub[m] for m in LOWER + HIGHER) * 100.0
+
+    def test_sweep_shape_and_flip_points(self):
+        data = rows("weight_sweeps.csv")
+        self.assertEqual(len(data), 756)
+        layout = {(r["encoding"], r["payload"]): r for r in rows("encoding_layout.csv")}
+        scorecard = rows("scorecard_raw.csv")
+        for analysis, payload, parameter, encoding in (
+            ("structural", "trit", 0, "int8 dense"),
+            ("structural", "trit", 45, "Dual6 dual-plane (trit-only frame)"),
+            ("storage", "trit", 30, "Dual6 dual-plane (trit-only frame)"),
+            ("selective", "dual", 25, "Dual6 dual-plane"),
+            ("selective", "dual", 100, "Dual6 dual-plane"),
+        ):
+            stored = next(
+                float(r["score"])
+                for r in data
+                if r["analysis"] == analysis
+                and r["payload"] == payload
+                and int(r["parameter"]) == parameter
+                and r["encoding"] == encoding
+            )
+            expected = self._score(layout, scorecard, payload, analysis, parameter, encoding)
+            with self.subTest(analysis=analysis, payload=payload, parameter=parameter):
+                self.assertAlmostEqual(stored, expected, places=5)
+
+        def score(analysis, payload, parameter, encoding):
+            return next(
+                float(r["score"])
+                for r in data
+                if r["analysis"] == analysis
+                and r["payload"] == payload
+                and int(r["parameter"]) == parameter
+                and r["encoding"] == encoding
+            )
+
+        dual6 = "Dual6 dual-plane (trit-only frame)"
+        self.assertGreater(
+            score("structural", "trit", 45, dual6),
+            score("structural", "trit", 45, "int8 dense"),
+        )
+        self.assertLess(
+            score("structural", "trit", 40, dual6),
+            score("structural", "trit", 40, "int8 dense"),
+        )
+        self.assertGreater(
+            score("selective", "dual", 25, "Dual6 dual-plane"),
+            score("selective", "dual", 25, "int8 dense"),
+        )
+        self.assertLess(
+            score("selective", "dual", 20, "Dual6 dual-plane"),
+            score("selective", "dual", 20, "int8 dense"),
+        )
+
+
+
+class ModelRoundtrip(unittest.TestCase):
+    def test_csv_shape_and_exactness(self):
+        data = rows("model_roundtrip.csv")
+        self.assertGreaterEqual(len(data), 2)
+        self.assertEqual({r["scope"] for r in data}, {"all_2d", "linears"})
+        for row in data:
+            with self.subTest(scope=row["scope"]):
+                self.assertEqual(int(row["weights_exact"]), 1)
+                self.assertEqual(int(row["logits_exact"]), 1)
+                self.assertEqual(float(row["max_logit_diff"]), 0.0)
+                self.assertEqual(float(row["top1_agreement"]), 1.0)
+                self.assertEqual(
+                    int(row["dual6_header_bytes"]), int(row["frames"]) * 33
+                )
+                self.assertEqual(
+                    int(row["dual6_encoded_total_bytes"]),
+                    int(row["dual6_payload_bytes"])
+                    + int(row["dual6_header_bytes"])
+                    + int(row["dual6_scale_bytes"]),
+                )
+
+    def test_check_csv_mode(self):
+        import subprocess
+        import sys
+
+        result = subprocess.run(
+            [sys.executable, os.path.join(ROOT, "tools", "model_roundtrip.py"), "--check-csv"],
+            capture_output=True,
+            text=True,
+            cwd=ROOT,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+
+    def test_headline_numbers(self):
+        data = {r["scope"]: r for r in rows("model_roundtrip.csv")}
+        linears = data["linears"]
+        self.assertEqual(int(linears["encoded_elements"]), 84934656)
+        self.assertEqual(int(linears["frames"]), 1296)
+        self.assertEqual(int(linears["dual6_payload_bytes"]), 16987968)
+        self.assertEqual(int(linears["dual6_header_bytes"]), 42768)
+        self.assertEqual(int(linears["dual6_encoded_total_bytes"]), 17030928)
+        self.assertEqual(int(linears["dual6_model_total_bytes"]), 96041232)
+        self.assertAlmostEqual(float(linears["dual6_bpw_encoded"]), 1.604144, places=5)
+        self.assertAlmostEqual(float(linears["dual6_bpw_overall"]), 6.174309, places=5)
+        self.assertAlmostEqual(float(linears["int8_bpw_overall"]), 10.5397, places=3)
+
+        all_2d = data["all_2d"]
+        self.assertEqual(int(all_2d["encoded_elements"]), 124318464)
+        self.assertEqual(int(all_2d["frames"]), 1897)
+        self.assertEqual(int(all_2d["dual6_payload_bytes"]), 24865210)
+        self.assertEqual(int(all_2d["dual6_header_bytes"]), 62601)
+        self.assertEqual(int(all_2d["dual6_encoded_total_bytes"]), 24928011)
+        self.assertEqual(int(all_2d["dual6_model_total_bytes"]), 25170699)
+
+
+class CompositeScores(unittest.TestCase):
+    def test_scores_match_a_fresh_computation(self):
+        scorecard = rows("scorecard_raw.csv")
+        layout = {(r["encoding"], r["payload"]): r for r in rows("encoding_layout.csv")}
+        taxonomy = {(r["encoding"], r["payload"]): r for r in rows("encoding_taxonomy.csv")}
+        stored = {
+            (r["payload"], r["encoding"]): r for r in rows("composite_scores.csv")
+        }
+        self.assertEqual(len(stored), 15)
+        checked = 0
+        for payload in ("trit", "dual"):
+            group = [r for r in scorecard if r["payload"] == payload]
+
+            def value_of(row, metric, payload=payload):
+                if metric == "selective_bytes":
+                    return float(layout[(row["encoding"], payload)]["selective_bytes_worst"])
+                return float(row[metric])
+
+            best = {m: min(value_of(r, m) for r in group) for m in LOWER}
+            entries = []
+            for row in group:
+                sub = {m: best[m] / value_of(row, m) for m in LOWER}
+                sub.update({m: value_of(row, m) for m in HIGHER})
+                tax = taxonomy[(row["encoding"], payload)]
+                sub["information_utilization"] = float(
+                    tax["info_bits_per_element"]
+                ) / float(tax["storage_bits_per_element"])
+                composite = (
+                    sum(sub[m] for m in LOWER + HIGHER + ("information_utilization",))
+                    / (len(LOWER) + len(HIGHER) + 1)
+                    * 100
+                )
+                entries.append((row["encoding"], sub, composite))
+            ranks = _competition_ranks([e[2] for e in entries], reverse=True)
+            for (encoding, sub, composite), rank in zip(entries, ranks):
+                got = stored[(payload, encoding)]
+                with self.subTest(payload=payload, encoding=encoding):
+                    for metric in LOWER + HIGHER:
+                        self.assertAlmostEqual(
+                            float(got[f"score_{metric}"]), sub[metric], places=5
+                        )
+                    self.assertAlmostEqual(
+                        float(got["score_information_utilization"]),
+                        sub["information_utilization"],
+                        places=5,
+                    )
+                    self.assertAlmostEqual(float(got["composite_score"]), composite, places=5)
+                    self.assertEqual(int(got["rank"]), rank)
+                checked += 1
+        self.assertEqual(checked, 15)
+
+    def test_equal_weight_ranking(self):
+        data = {(r["payload"], r["encoding"]): r for r in rows("composite_scores.csv")}
+        self.assertEqual(data[("trit", "int8 dense")]["rank"], "1")
+        self.assertEqual(data[("dual", "int8 dense")]["rank"], "1")
+        self.assertEqual(data[("trit", "Dual6 dual-plane (trit-only frame)")]["rank"], "2")
+        self.assertEqual(data[("dual", "Dual6 dual-plane")]["rank"], "2")
+        self.assertAlmostEqual(
+            float(data[("trit", "int8 dense")]["composite_score"]), 66.0, delta=0.1
+        )
+        self.assertAlmostEqual(
+            float(data[("dual", "int8 dense")]["composite_score"]), 64.2, delta=0.1
+        )
+
+    def test_rendered_tables(self):
+        data = {(r["payload"], r["encoding"]): r for r in rows("composite_scores.csv")}
+        for readme, mapping, marker, end in (
+            ("README.md", NAME_EN, "#### Comprehensive score: T and I (equal weights)",
+             "#### Conditional weights"),
+            ("README.zh-CN.md", NAME_ZH, "#### 综合评分：T 与 I（等权）",
+             "#### 条件权重"),
+        ):
+            text = read(readme)
+            table_rows = [c for c in _section_rows(text, marker, end) if len(c) == 13]
+            self.assertEqual(len(table_rows), 15)
+            for index, cells in enumerate(table_rows):
+                encoding = _name([cells[1]], mapping)
+                # Table order: first 9 rows trit, next 6 dual.
+                payload = "trit" if index < 9 else "dual"
+                got = data[(payload, encoding)]
+                with self.subTest(readme=readme, encoding=encoding, payload=payload):
+                    self.assertEqual(int(cells[0]), int(got["rank"]))
+                    self.assertAlmostEqual(
+                        float(cells[11].replace("%", "")),
+                        float(got["utilization_pct"]),
+                        delta=0.1,
+                    )
+                    self.assertAlmostEqual(float(cells[12]), float(got["composite_score"]), delta=0.05)
+
+
+
+
+class XSDecode(unittest.TestCase):
+    def test_measured_cases(self):
+        data = {(r["backend"], r["case"]): r for r in rows("xs_decode.csv")}
+        cases = {
+            "digit_decode", "I_bit_channel", "I_trit_channel", "I_dual_plane_full",
+            "X_demux", "X_binary_view", "X_ternary_view", "S_trit_plus_bit",
+        }
+        self.assertEqual({case for _, case in data}, cases)
+        self.assertEqual({backend for backend, _ in data}, {"ref", "native"})
+        for key, row in data.items():
+            with self.subTest(key=key):
+                self.assertGreater(float(row["ns_per_element"]), 0)
+        self.assertAlmostEqual(float(data[("ref", "X_demux")]["ns_per_element"]), 137.4, delta=10.0)
+        self.assertAlmostEqual(float(data[("native", "X_demux")]["ns_per_element"]), 23.8, delta=3.0)
+        self.assertAlmostEqual(float(data[("native", "I_bit_channel")]["ns_per_element"]), 5.1, delta=2.0)
+        self.assertAlmostEqual(float(data[("native", "I_trit_channel")]["ns_per_element"]), 5.9, delta=2.0)
+        self.assertAlmostEqual(float(data[("native", "I_dual_plane_full")]["ns_per_element"]), 19.0, delta=3.0)
+        self.assertAlmostEqual(float(data[("native", "S_trit_plus_bit")]["ns_per_element"]), 30.8, delta=5.0)
+        self.assertAlmostEqual(float(data[("ref", "X_binary_view")]["ns_per_element"]), 118.0, delta=10.0)
+        self.assertAlmostEqual(float(data[("ref", "X_ternary_view")]["ns_per_element"]), 110.4, delta=10.0)
+        self.assertLess(
+            float(data[("native", "X_demux")]["ns_per_element"]),
+            float(data[("ref", "X_demux")]["ns_per_element"]),
+        )
+
+
+class XSScores(unittest.TestCase):
+    def test_mixed_rows(self):
+        data = {r["data_model"]: r for r in rows("xs_scores.csv")}
+        self.assertEqual(set(data), {"X", "S"})
+        for model, row in data.items():
+            with self.subTest(model=model):
+                self.assertEqual(row["evidence"], "mixed_native_decode")
+                self.assertEqual(row["decode_backend"], "native_batch")
+                self.assertIn("xs_decode.csv", row["proxy_source"])
+                self.assertIn("native batch", row["proxy_source"])
+                self.assertIn("Dual6 dual-plane", row["proxy_source"])
+                utilization = float(row["info_bits_per_element"]) / float(
+                    row["storage_bits_per_element"]
+                )
+                self.assertAlmostEqual(
+                    float(row["score_information_utilization"]), utilization, places=6
+                )
+        self.assertGreater(
+            float(data["S"]["composite_score"]), float(data["X"]["composite_score"])
+        )
+        self.assertAlmostEqual(float(data["S"]["composite_score"]), 57.5, delta=0.2)
+        self.assertAlmostEqual(float(data["X"]["composite_score"]), 56.3, delta=0.2)
+
+    def test_rendered_xs_table(self):
+        data = {r["data_model"]: r for r in rows("xs_scores.csv")}
+        for readme in ("README.md", "README.zh-CN.md"):
+            text = read(readme)
+            if readme == "README.md":
+                marker, end = "#### Comprehensive score: T and I (equal weights)", "#### Conditional weights"
+            else:
+                marker, end = "#### 综合评分：T 与 I（等权）", "#### 条件权重"
+            table_rows = [c for c in _section_rows(text, marker, end) if len(c) == 6]
+            self.assertEqual(len(table_rows), 2)
+            for cells in table_rows:
+                model = cells[2]
+                got = data[model]
+                with self.subTest(readme=readme, model=model):
+                    self.assertAlmostEqual(float(cells[4]), float(got["composite_score"]), delta=0.05)
+
+
+class DataModels(unittest.TestCase):
+    def test_four_models_and_math(self):
+        data = {r["data_model"]: r for r in rows("data_models.csv")}
+        self.assertEqual(set(data), {"T", "I", "X", "S"})
+        for model, row in data.items():
+            with self.subTest(model=model):
+                info = float(row["info_bits_per_element"])
+                storage = float(row["dual6_storage_bits_per_element"])
+                self.assertAlmostEqual(
+                    float(row["utilization_pct"]), info / storage * 100, places=4
+                )
+        self.assertAlmostEqual(float(data["T"]["utilization_pct"]), 99.06, delta=0.01)
+        self.assertAlmostEqual(float(data["I"]["utilization_pct"]), 99.42, delta=0.01)
+        self.assertAlmostEqual(float(data["X"]["utilization_pct"]), 38.46, delta=0.01)
+        self.assertAlmostEqual(float(data["S"]["utilization_pct"]), 60.96, delta=0.01)
+        self.assertEqual(data["X"]["interconvertible"], "yes")
+        self.assertEqual(data["S"]["interconvertible"], "no")
+
+    def test_readme_data_model_tables(self):
+        data = {r["data_model"]: r for r in rows("data_models.csv")}
+        for readme, marker, end in (
+            ("README.md", "#### Data models: T, I, X, S", "#### Nine scored metrics"),
+            ("README.zh-CN.md", "#### 数据模型：T、I、X、S", "#### 九项计分指标"),
+        ):
+            text = read(readme)
+            table_rows = [c for c in _section_rows(text, marker, end) if len(c) == 7]
+            self.assertEqual(len(table_rows), 4)
+            for model, cells in zip(("T", "I", "X", "S"), table_rows):
+                with self.subTest(readme=readme, model=model):
+                    self.assertAlmostEqual(
+                        float(cells[2]), float(data[model]["info_bits_per_element"]), delta=0.001
+                    )
+                    self.assertAlmostEqual(
+                        float(cells[3].split()[0]),
+                        float(data[model]["dual6_storage_bits_per_element"]),
+                        delta=0.001,
+                    )
+                    util = float(cells[4].replace("*", "").replace("%", ""))
+                    self.assertAlmostEqual(
+                        util, float(data[model]["utilization_pct"]), delta=0.1
+                    )
+
+
+class EncodingTaxonomy(unittest.TestCase):
+    def test_taxonomy_matches_scorecard(self):
+        raw = {(r["encoding"], r["payload"]): r for r in rows("scorecard_raw.csv")}
+        tax = rows("encoding_taxonomy.csv")
+        self.assertEqual(len(tax), 15)
+        self.assertEqual({(r["encoding"], r["payload"]) for r in tax}, set(raw))
+        models = {r["data_model"] for r in tax}
+        self.assertEqual(models, {"T", "I"})
+        self.assertEqual(sum(r["data_model"] == "T" for r in tax), 9)
+        self.assertEqual(sum(r["data_model"] == "I" for r in tax), 6)
+        for row in tax:
+            key = (row["encoding"], row["payload"])
+            with self.subTest(key=key):
+                self.assertEqual(row["data_model"], "T" if row["payload"] == "trit" else "I")
+                self.assertAlmostEqual(
+                    float(row["storage_bits_per_element"]),
+                    float(raw[key]["bits_per_element"]),
+                    places=5,
+                )
+                info = float(row["info_bits_per_element"])
+                storage = float(row["storage_bits_per_element"])
+                self.assertAlmostEqual(float(row["utilization_pct"]), info / storage * 100, places=4)
+
+
+class InformationBudget(unittest.TestCase):
+    def test_budget_matches_data_models(self):
+        models = {r["data_model"]: r for r in rows("data_models.csv")}
+        budget = {r["data_model"]: r for r in rows("information_budget.csv")}
+        self.assertEqual(set(budget), {"T", "I", "X", "S"})
+        for model, row in budget.items():
+            with self.subTest(model=model):
+                source = models[model]
+                self.assertAlmostEqual(
+                    float(row["info_bits_per_element"]),
+                    float(source["info_bits_per_element"]),
+                    places=6,
+                )
+                self.assertAlmostEqual(
+                    float(row["dual6_storage_bits_per_element"]),
+                    float(source["dual6_storage_bits_per_element"]),
+                    places=6,
+                )
+                self.assertAlmostEqual(
+                    float(row["utilization_pct"]),
+                    float(row["info_bits_per_element"])
+                    / float(row["dual6_storage_bits_per_element"])
+                    * 100,
+                    places=4,
+                )
 
 
 class DerivedFilesAreFresh(unittest.TestCase):
@@ -423,10 +957,10 @@ class RatioClaims(unittest.TestCase):
             float(dual["bits_per_element"]) / float(trit["bits_per_element"]), 1.62, delta=0.01
         )
         readme = read("README.md")
-        for claim in ("1.62×", "8192 B", "131072 B"):
+        for claim in ("1.62×", "4.87×", "8192 B", "13108 B", "131072 B"):
             self.assertIn(claim, readme)
         zh = read("README.zh-CN.md")
-        for claim in ("1.62×", "8192 B", "131072 B"):
+        for claim in ("1.62×", "4.87", "8192 B", "13108 B", "131072 B"):
             self.assertIn(claim, zh)
 
 
@@ -551,7 +1085,7 @@ class ReadmeQuotes(unittest.TestCase):
         if not os.path.exists(os.path.join(ROOT, "README.zh-CN.md")):
             self.skipTest("no Chinese README")
         zh = read("README.zh-CN.md")
-        for claim in ("1.60 bpw", "59.2 ns", "62.5%", "−25%", "64 KiB", "306"):
+        for claim in ("1.60 bpw", "59.2 ns", "62.5%", "−25%", "64 KiB", "326"):
             with self.subTest(claim=claim):
                 self.assertIn(claim, zh)
         self.assertIn("README.md", zh)          # language switcher back

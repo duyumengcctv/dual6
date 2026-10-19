@@ -1,0 +1,16 @@
+encoding,payload,data_model,symbol_map,layout,info_bits_per_element,storage_bits_per_element,utilization_pct,interconvertible,write_semantics,evidence,notes
+fp16 dense,trit,T,dense_fp16,dense_fp16,1.584963,16,9.906016,no,local per-element update,measured,one fp16 per trit
+int8 dense,trit,T,dense_int8,dense_int8,1.584963,8,19.812031,no,local per-element update,measured,one int8 per trit
+TQ1_0 (5 trit/byte),trit,T,packed_5trit,packed_5trit,1.584963,1.600098,99.054111,no,local per-element update,measured,5 trits per byte
+TQ2_0 (2 bit/trit),trit,T,packed_2bit,packed_2bit,1.584963,2,79.248125,no,local per-element update,measured,2 bits per trit
+6-state 3-bit slot,trit,T,d6-mux,slot3,1.584963,3,52.832083,no,local per-element update,measured,one 3-bit slot per symbol
+Dual6 dual-plane,trit,T,d6-mux,dual_plane,1.584963,2.600098,60.957807,no,local per-element update,measured,bit plane present but unused
+Dual6 dual-plane (trit-only frame),trit,T,d6-mux,trit_only,1.584963,1.600098,99.054111,no,local per-element update,measured,bit plane omitted
+Dual6 interleaved (13 bit/5 sym),trit,T,d6-mux,interleaved6,1.584963,2.60022,60.954945,no,local per-element update,measured,5 symbols per 13-bit group
+two separate arrays,trit,T,separate_arrays,separate_arrays,1.584963,1.600098,99.054111,no,local per-element update,measured,one trit array
+fp16 dense,dual,I,dense_fp16,dense_fp16,2.584963,32,8.078008,no,local per-element update,measured,two fp16 per element
+int8 dense,dual,I,dense_int8,dense_int8,2.584963,16,16.156016,no,local per-element update,measured,two int8 per element
+6-state 3-bit slot,dual,I,d6-mux,slot3,2.584963,3,86.165417,no,local per-element update,measured,one 3-bit slot per symbol
+Dual6 dual-plane,dual,I,d6-mux,dual_plane,2.584963,2.600098,99.4179,no,local per-element update,measured,bit plane + trit plane
+Dual6 interleaved (13 bit/5 sym),dual,I,d6-mux,interleaved6,2.584963,2.60022,99.413233,no,local per-element update,measured,5 symbols per 13-bit group
+two separate arrays,dual,I,separate_arrays,separate_arrays,2.584963,2.600098,99.4179,no,local per-element update,measured,bit array + trit array

@@ -70,6 +70,8 @@ def main(argv: Optional[List[str]] = None) -> int:
         ("version strings", [sys.executable, "tools/check_version.py"]),
         ("native API coverage", [sys.executable, "tools/native_coverage.py"]),
         ("derived scorecard data", [sys.executable, "tools/make_scores.py", "--check"]),
+        ("model roundtrip CSV", [sys.executable, "tools/model_roundtrip.py", "--check-csv"]),
+        ("X/S decode CSV", [sys.executable, "tools/bench_xs.py", "--check-csv"]),
     ]
 
     if args.skip_rust:
